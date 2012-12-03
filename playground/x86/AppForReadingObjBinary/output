@@ -1,0 +1,3683 @@
+	jg 0x47
+	dec %esp
+	inc %esi
+	add %eax, (%ecx)
+	add %eax, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add (%eax), %al
+	add (%eax), %eax
+	add %eax, (%eax)
+	add %al, (%eax)
+	add %al, 0x340804(%ebx)
+	add %al, (%eax)
+	push $0x13
+	add %al, (%eax)
+	add %dh, (%eax,%eax)
+	and %al, (%eax)
+	or %eax, (%eax)
+	sub %al, (%eax)
+	and $0x0, %al
+	and %eax, (%eax)
+	push %es
+	add %al, (%eax)
+	add %dh, (%eax,%eax)
+	add %al, (%eax)
+	xor $0x80, %al
+	add $0x8, %al
+	xor $0x80, %al
+	add $0x8, %al
+	and %al, (%ecx)
+	add %al, (%eax)
+	and %al, (%ecx)
+	add %al, (%eax)
+	add $0x4000000, %eax
+	add %al, (%eax)
+	add %al, (%ebx)
+	add %al, (%eax)
+	add %dl, 0x0(%ecx,%eax)
+	add %dl, 0x4(%ecx,%eax,4)
+	or %dl, 0x4(%ecx,%eax,4)
+	or %dl, (%ebx)
+	add %al, (%eax)
+	add %dl, (%ebx)
+	add %al, (%eax)
+	add %al, (%eax,%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, 0x80000804(%eax)
+	add $0x8, %al
+	call 0xffffffffe800008e
+	add $0x50000, %eax
+	add %al, (%eax)
+	add %dl, (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	add %al, (%eax)
+	adc $0xf, %al
+	add %al, (%eax)
+	adc $0x9f, %al
+	add $0x8, %al
+	adc $0x9f, %al
+	add $0x8, %al
+	cld 
+	add %al, (%eax)
+	add %al, (%ecx,%eax)
+	add %al, (%eax)
+	push %es
+	add %al, (%eax)
+	add %al, (%eax)
+	adc %al, (%eax)
+	add %al, (%edx)
+	add %al, (%eax)
+	add %ch, (%eax)
+	sldt (%eax)
+	sub %bl, 0x9f280804(%edi)
+	add $0x8, %al
+	$0x0,$0x0
+	$0x0,$0x0
+	push %es
+	add %al, (%eax)
+	add %al, (%eax,%eax)
+	add %al, (%eax)
+	add $0x0, %al
+	add %al, (%eax)
+	push $0x68000001
+	add $0x8048168, (%eax,%ecx)
+	inc %esp
+	add %al, (%eax)
+	add %al, 0x0(%eax,%eax)
+	add %al, (%eax,%eax)
+	add %al, (%eax)
+	add $0x0, %al
+	add %al, (%eax)
+	push %eax
+	in $0x74, %eax
+	lock add $0x0, %al
+	add %dh, %al
+	test %al, (%eax,%ecx)
+	lock test %al, (%eax,%ecx)
+	xor $0x0, %al
+	add %al, (%eax)
+	xor $0x0, %al
+	add %al, (%eax)
+	add $0x0, %al
+	add %al, (%eax)
+	add $0x0, %al
+	add %al, (%eax)
+	push %ecx
+	in $0x74, %eax
+	add %al, %fs:(%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	push %es
+	add %al, (%eax)
+	add %al, (%eax,%eax)
+	add %al, (%eax)
+	push %edx
+	in $0x74, %eax
+	adc $0xf, %al
+	add %al, (%eax)
+	adc $0x9f, %al
+	add $0x8, %al
+	adc $0x9f, %al
+	add $0x8, %al
+	in %dx, %al
+	add %al, (%eax)
+	add %ch, %ah
+	add %al, (%eax)
+	add %al, (%eax,%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	add %al, (%eax)
+	das 
+	insb 
+	imul $0x6c2d646c, 0x2f(%edx), %esp
+	imul $0x6f732e78, 0x75(%esi), %ebp
+	xor %cs:(%eax), %al
+	add %al, (%eax,%eax)
+	add %al, (%eax)
+	adc %al, (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	add %al, (%eax)
+	inc %edi
+	dec %esi
+	push %ebp
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%edx)
+	add %al, (%eax)
+	add %al, (%esi)
+	add %al, (%eax)
+	add %bl, (%eax)
+	add %al, (%eax)
+	add %al, (%eax,%eax)
+	add %al, (%eax)
+	adc $0x0, %al
+	add %al, (%eax)
+	add (%eax), %eax
+	add %al, (%eax)
+	inc %edi
+	dec %esi
+	push %ebp
+	add %al, %cl
+	iretd 
+	cmp %ebp, (%eax)
+	push %ecx
+	aam $0x7a
+	add $0x86, %al
+	sti 
+	arpl %bp, %ax
+	mov $0x91dfd31a, %eax
+	adc $0x92, %al
+	add (%eax), %al
+	add %al, (%eax)
+	add (%eax), %eax
+	add %al, (%eax)
+	add %eax, (%eax)
+	add %al, (%eax)
+	add $0x0, %eax
+	and %al, (%eax)
+	and %al, (%eax)
+	add %al, (%eax)
+	add %al, (%ebx)
+	add %al, (%eax)
+	add %ch, 0xc0e34b(%ebp)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %ah, (%eax)
+	add %al, (%eax)
+	add %ch, (%ecx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %dl, (%edx)
+	add %al, (%eax)
+	add %bl, (%edx)
+	add %al, (%eax)
+	add %ch, %ah
+	test %al, (%eax,%ecx)
+	add $0x0, %al
+	add %al, (%eax)
+	adc %eax, (%eax)
+	sldt (%eax)
+	pop %edi
+	pop %edi
+	a16 insd 
+	outsd 
+	outsb 
+	pop %edi
+	jae 0x28a
+	popad 
+	jb 0x28d
+	pop %edi
+	pop %edi
+	add %ch, 0x62(%ecx,%ebp,2)
+	arpl %bp, (%esi)
+	jae 0x292
+	add %bl, %ss:0x49(%edi)
+	dec %edi
+	pop %edi
+	jae 0x2a0
+	imul $0x64657375, %fs:0x5f(%esi), %ebp
+	add %bl, 0x5f(%edi)
+	insb 
+	imul $0x6174735f, 0x63(%edx), %esp
+	jb 0x2b5
+	pop %edi
+	insd 
+	popad 
+	imul $0x42494c47, 0x0(%esi), %ebp
+	inc %ebx
+	pop %edi
+	xor (%esi), %ch
+	xor %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%edx)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %al, (%ecx)
+	add %al, (%ecx)
+	add %dl, (%eax)
+	add %al, (%eax)
+	add %dl, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %dl, (%eax)
+	imul $0x20000, 0xd(%ecx), %ebp
+	cmp (%eax), %eax
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	lock lahf 
+	add $0x8, %al
+	push %es
+	add %eax, (%eax)
+	add %al, (%eax)
+	mov 0x1070804, %al
+	add %al, (%eax)
+	add $0xa0, %al
+	add $0x8, %al
+	pop %es
+	add (%eax), %al
+	add %dl, -0x7d(%ebx)
+	in %dx, %al
+	or %ch, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	pop %ebx
+	add $0x1d57, %ebx
+	mov 0xfffffffc(%ebx), %eax
+	test %eax, %eax
+	jz 0x2b3
+	call 0x2e0
+	call 0x390
+	call 0x4a0
+	add $0x8, %esp
+	pop %ebx
+	ret 
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	push 0x8049ff8
+	jmp 0x8049ffc
+	add %al, (%eax)
+	add %al, (%eax)
+	jmp 0x804a000
+	push $0x0
+	jmp 0x2d0
+	jmp 0x804a004
+	push $0x8
+	jmp 0x2d0
+	xor %ebp, %ebp
+	pop %esi
+	mov %esp, %ecx
+	and $0xf0, %esp
+	push %eax
+	push %esp
+	push %edx
+	push $0x8048490
+	push $0x8048420
+	push %ecx
+	push %esi
+	push $0x80483b4
+	call 0x2f0
+	hlt 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	push %ebp
+	mov %esp, %ebp
+	push %ebx
+	sub $0x4, %esp
+	cmpb $0x0, 0x804a010
+	jnz 0x37f
+	mov 0x804a014, %eax
+	mov $0x8049f20, %ebx
+	sub $0x8049f1c, %ebx
+	sar $0x2, %ebx
+	sub $0x1, %ebx
+	cmp %ebx, %eax
+	jae 0x378
+	lea 0x0(%esi), %esi
+	add $0x1, %eax
+	mov %eax, 0x804a014
+	call 0x8049f1c(%eax,4)
+	mov 0x804a014, %eax
+	cmp %ebx, %eax
+	jb 0x360
+	movb $0x1, 0x804a010
+	add $0x4, %esp
+	pop %ebx
+	pop %ebp
+	ret 
+	lea 0x0(%esi), %esi
+	lea 0x0(%edi), %edi
+	push %ebp
+	mov %esp, %ebp
+	sub $0x18, %esp
+	mov 0x8049f24, %eax
+	test %eax, %eax
+	jz 0x3b1
+	mov $0x0, %eax
+	test %eax, %eax
+	jz 0x3b1
+	mov $0x8049f24, (%esp)
+	call %eax
+	leave 
+	ret 
+	nop 
+	push %ebp
+	mov %esp, %ebp
+	sub $0x10, %esp
+	mov $0x7da, -0x4(%ebp)
+	mov $0xa, -0x8(%ebp)
+	mov $0x0, -0xc(%ebp)
+	mov -0x8(%ebp), %eax
+	mov -0x4(%ebp), %edx
+	add %edx, %eax
+	mov %eax, -0xc(%ebp)
+	mov -0x8(%ebp), %eax
+	mov -0x4(%ebp), %edx
+	mov %edx, %ecx
+	sub %eax, %ecx
+	mov %ecx, %eax
+	mov %eax, -0xc(%ebp)
+	mov -0x4(%ebp), %eax
+	imul -0x8(%ebp), %eax
+	mov %eax, -0xc(%ebp)
+	mov -0x4(%ebp), %eax
+	mov %eax, %edx
+	sar $0x1f, %edx
+	idiv -0x8(%ebp)
+	mov %eax, -0xc(%ebp)
+	mov -0xc(%ebp), %eax
+	cmp -0x8(%ebp), %eax
+	jle 0x40f
+	mov -0xc(%ebp), %eax
+	mov %eax, -0x8(%ebp)
+	mov $0x0, %eax
+	leave 
+	ret 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	push %ebp
+	push %edi
+	push %esi
+	push %ebx
+	call 0x492
+	add $0x1bcb, %ebx
+	sub $0x1c, %esp
+	mov 0x30(%esp), %ebp
+	lea 0xffffff20(%ebx), %edi
+	call 0x294
+	lea 0xffffff20(%ebx), %eax
+	sub %eax, %edi
+	sar $0x2, %edi
+	test %edi, %edi
+	jz 0x479
+	xor %esi, %esi
+	lea 0x0(%esi), %esi
+	mov 0x38(%esp), %eax
+	mov %ebp, (%esp)
+	mov %eax, 0x8(%esp)
+	mov 0x34(%esp), %eax
+	mov %eax, 0x4(%esp)
+	call 0xffffff20(%ebx,%esi,4)
+	add $0x1, %esi
+	cmp %edi, %esi
+	jnz 0x458
+	add $0x1c, %esp
+	pop %ebx
+	pop %esi
+	pop %edi
+	pop %ebp
+	ret 
+	jmp 0x490
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	rep ret 
+	mov (%esp), %ebx
+	ret 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	push %ebp
+	mov %esp, %ebp
+	push %ebx
+	sub $0x4, %esp
+	mov 0x8049f14, %eax
+	cmp $0xff, %eax
+	jz 0x4c4
+	mov $0x8049f14, %ebx
+	o16 nop 
+	sub $0x4, %ebx
+	call %eax
+	mov (%ebx), %eax
+	cmp $0xff, %eax
+	jnz 0x4b8
+	add $0x4, %esp
+	pop %ebx
+	pop %ebp
+	ret 
+	nop 
+	nop 
+	push %ebx
+	sub $0x8, %esp
+	call 0x4d5
+	pop %ebx
+	add $0x1b1f, %ebx
+	call 0x330
+	add $0x8, %esp
+	pop %ebx
+	ret 
+	add %al, (%eax)
+	add (%eax), %eax
+	add %al, (%eax)
+	add %eax, (%eax)
+	add (%eax), %al
+	add %ebx, (%ebx)
+	add (%ebx), %edi
+	xor %al, (%eax)
+	add %al, (%eax)
+	add $0xe0000000, %eax
+	std 
+	invalid 
+	dec %esp
+	add %al, (%eax)
+	add %al, %ah
+	invalid 
+	push 0x0(%eax)
+	add %al, (%eax)
+	xor %bh, %bh
+	invalid 
+	nop 
+	add %al, (%eax)
+	add %ah, 0xccffffff(%eax)
+	add %al, (%eax)
+	add %ah, 0xe0ffffff(%edx)
+	add %al, (%eax)
+	add %dl, (%eax,%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %edi, 0x52(%edx)
+	add %al, (%ecx)
+	jl 0x53b
+	add %ebx, (%ebx)
+	or $0x4, %al
+	add $0x88, %al
+	add %eax, (%eax)
+	add %ah, (%eax)
+	add %al, (%eax)
+	add %bl, (%eax,%eax)
+	add %al, (%eax)
+	mov %cr1, %ebp
+	invalid 
+	xor %al, (%eax)
+	add %al, (%eax)
+	add %cl, (%esi)
+	or %al, 0xe(%esi)
+	or $0x4a, %al
+	ud2 
+	jz 0x55b
+	js 0x559
+	aas 
+	sbb (%ebx), %bh
+	sub (%edx), %dh
+	and $0x22, %al
+	sbb $0x0, %al
+	add %al, (%eax)
+	inc %eax
+	add %al, (%eax)
+	add %cl, -0x1(%esi,%edi,8)
+	jmp 0x0(%edx)
+	add %al, (%eax)
+	add %al, 0xe(%ecx)
+	or %al, 0x50d4202(%ebp)
+	add -0x3b(%esi), %bl
+	or $0x4, %al
+	add $0x0, %al
+	cmp %al, (%eax)
+	add %al, (%eax)
+	pushad 
+	add %al, (%eax)
+	add %bl, 0x61fffffe(%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	inc %ecx
+	push %cs
+	or %al, 0xc0e4102(%ebp)
+	xchg %eax, (%ebx)
+	inc %ecx
+	push %cs
+	adc %al, 0x140e4104(%esi)
+	add $0x4a, 0x2300e4e
+	push %cs
+	adc $0x41, %al
+	push %cs
+	adc %al, %bl
+	inc %ecx
+	push %cs
+	or $0xc6, %al
+	inc %ecx
+	push %cs
+	or %al, %bh
+	inc %ecx
+	push %cs
+	add $0xc5, %al
+	adc %al, (%eax)
+	add %al, (%eax)
+	pushfd 
+	add %al, (%eax)
+	add %cl, %ah
+	invalid 
+	inc (%edx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %dl, (%eax)
+	add %al, (%eax)
+	add %dh, 0xba000000(%eax)
+	invalid 
+	inc (%eax,%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	invalid 
+	invalid 
+	add %al, (%eax)
+	add %al, (%eax)
+	invalid 
+	invalid 
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	add %al, (%eax)
+	adc %al, (%eax)
+	add %al, (%eax)
+	or $0x0, %al
+	add %al, (%eax)
+	xchg %eax, %esp
+	addb $0xd, (%eax,%ecx)
+	add %al, (%eax)
+	add %cl, %ah
+	test %al, (%eax,%ecx)
+	cmc 
+	invalid 
+	outsd 
+	lodsb 
+	add $0x5, (%eax,%ecx)
+	or $0x82, %al
+	add $0x8, %al
+	push %es
+	add %al, (%eax)
+	add %cl, %ah
+	add $0xa, (%eax,%ecx)
+	inc %ebp
+	add %al, (%eax)
+	add %cl, (%ebx)
+	add %al, (%eax)
+	add %dl, (%eax)
+	add %al, (%eax)
+	add %dl, 0x0
+	add %al, (%eax)
+	add %al, (%ebx)
+	add %al, (%eax)
+	add %dh, %ah
+	lahf 
+	add $0x8, %al
+	add (%eax), %al
+	add %al, (%eax)
+	adc %al, (%eax)
+	add %al, (%eax)
+	adc $0x0, %al
+	add %al, (%eax)
+	adc %eax, (%eax)
+	add %al, (%eax)
+	pop %ss
+	add %al, (%eax)
+	add %al, 0x110804(%edx,%eax,4)
+	add %al, (%eax)
+	jl 0xf18
+	add $0x8, %al
+	adc (%eax), %al
+	add %al, (%eax)
+	or %al, (%eax)
+	add %al, (%eax)
+	adc (%eax), %eax
+	add %al, (%eax)
+	or %al, (%eax)
+	add %al, (%eax)
+	invalid 
+	ljmp *0x5c(%edi)
+	addb $0xff, (%eax,%ecx)
+	invalid 
+	outsd 
+	add %eax, (%eax)
+	add %al, (%eax)
+	lock invalid 
+	outsd 
+	push %edx
+	addb $0x0, (%eax,%ecx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %ch, (%eax)
+	lahf 
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	out %al, $0x82
+	add $0x8, %al
+	testb $0x0, 0x804(%edx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, 0x43(%edi)
+	inc %ebx
+	cmp (%eax), %ah
+	sub %dl, 0x62(%ebp)
+	jnz 0x1088
+	jz 0x1091
+	das 
+	dec %esp
+	imul $0x34206f72, 0x61(%esi), %ebp
+	xor %cs:0x75627531, %ebp
+	outsb 
+	jz 0x10a6
+	xor $0x2e342029, %eax
+	xor %cs:(%eax), %eax
+	sbb $0x0, %al
+	add %al, (%eax)
+	add (%eax), %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add $0x0, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	mov $0x83, %ah
+	add $0x8, %al
+	%eax,(%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	insb 
+	add %al, (%eax)
+	add %al, (%edx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%ecx,%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %ebx, (%ebx)
+	add %al, (%eax)
+	add %dh, 0x84160804(%ebx,%eax,4)
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add (%ecx), %al
+	pop %ebp
+	add %al, (%eax)
+	add %al, (%ecx)
+	add 0x0(%eax), %ch
+	add %al, (%eax)
+	mov $0x83, %ah
+	add $0x8, %al
+	push %ss
+	test %al, (%eax,%ecx)
+	add %al, (%eax)
+	add %al, (%eax)
+	push $0x3000000
+	or $0x0, %al
+	add %al, (%eax)
+	add %eax, (%eax,%ebp,2)
+	add %al, (%eax)
+	add %al, (%edx)
+	xchg %eax, %ecx
+	jz 0x10a9
+	adc %eax, (%eax)
+	add %al, (%eax)
+	add %eax, 0x68
+	add 0x160370(%ecx), %dl
+	add %al, (%eax)
+	add %eax, (%esi)
+	push $0x2000000
+	xchg %eax, %ecx
+	insb 
+	add %al, (%esp,%eax)
+	add $0x746e69, %eax
+	add %al, (%ecx)
+	adc %eax, (%ecx)
+	and $0x30b130e, %eax
+	push %cs
+	adc %eax, (%ecx)
+	adc (%ecx), %al
+	adc %al, (%esi)
+	add %al, (%eax)
+	add (%esi), %ch
+	add %edi, (%edi)
+	or $0x3, %al
+	push %cs
+	cmp (%ebx), %cl
+	cmp (%ebx), %ecx
+	dec %ecx
+	adc (%ecx), %edx
+	add %edx, (%edx)
+	add %eax, 0x6(%eax)
+	add %edx, (%ebx)
+	add %al, (%eax)
+	add (%eax,%eax), %esi
+	add (%esi), %ecx
+	cmp (%ebx), %cl
+	cmp (%ebx), %ecx
+	dec %ecx
+	adc (%edx), %eax
+	or (%eax), %al
+	add %al, (%esp)
+	add %cl, (%ebx)
+	or (%esi), %edi
+	or (%ebx), %eax
+	or %al, (%eax)
+	add %al, (%eax)
+	jbe 0x110f
+	add %al, (%eax)
+	add (%eax), %al
+	pop %eax
+	add %al, (%eax)
+	add %al, (%ecx)
+	add %edi, %ebx
+	push %cs
+	or $0x1010100, %eax
+	add %eax, (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	add %al, (%ecx)
+	das 
+	push $0x2f656d6f
+	outsb 
+	imul $0x65646f43, 0x2f(%ebx), %esi
+	pop %edi
+	inc %edx
+	insb 
+	outsd 
+	arpl %bp, 0x73(%ebx)
+	pop %edi
+	jo 0x11b4
+	outsd 
+	push $0x65
+	arpl %si, 0x2f(%ebx,%esi,2)
+	jae 0x11b4
+	insd 
+	jo 0x11ba
+	pop %edi
+	jz 0x11b7
+	jae 0x11c8
+	pop %edi
+	outsw 
+	jb 0x11b8
+	arpl %si, 0x6f(%edx)
+	jae 0x11d1
+	sub $0x636367, %eax
+	add %ch, 0x61(%ebp)
+	imul $0x10063, 0x2e(%esi), %ebp
+	add %al, (%eax)
+	add %al, 0x483b402
+	or %dl, (%edi)
+	jnz 0x11ef
+	jbe 0x1129
+	in $0x9f, %eax
+	fadd 0x20259(%ecx,%ebp,2)
+	add %eax, (%ecx)
+	inc %edi
+	dec %esi
+	push %ebp
+	and %al, 0x20(%ebx)
+	xor $0x2e, %al
+	xor %cs:(%eax), %eax
+	jbe 0x11f6
+	jb 0x11c8
+	add %dh, 0x61(%esi)
+	jb 0x11ce
+	add %dh, 0x61(%esi)
+	jb 0x11d4
+	add %ch, (%edi)
+	push $0x2f656d6f
+	outsb 
+	imul $0x65646f43, 0x2f(%ebx), %esi
+	pop %edi
+	inc %edx
+	insb 
+	outsd 
+	arpl %bp, 0x73(%ebx)
+	pop %edi
+	jo 0x122e
+	outsd 
+	push $0x65
+	arpl %si, 0x2f(%ebx,%esi,2)
+	jae 0x122e
+	insd 
+	jo 0x1234
+	pop %edi
+	jz 0x1231
+	jae 0x1242
+	pop %edi
+	outsw 
+	jb 0x1232
+	arpl %si, 0x6f(%edx)
+	jae 0x124b
+	sub $0x2f636367, %eax
+	insd 
+	popad 
+	imul $0x616d0063, 0x2e(%esi), %ebp
+	imul $0x0, 0x0(%esi), %ebp
+	add %eax, (%eax)
+	add %al, (%eax)
+	add (%eax), %al
+	jz 0x11f9
+	add %eax, (%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	add %al, (%eax)
+	add (%eax), %al
+	jz 0x1209
+	add (%eax), %eax
+	add %al, (%eax)
+	popad 
+	add %al, (%eax)
+	add %al, (%edx)
+	add %dh, 0x8(%ebp)
+	popad 
+	add %al, (%eax)
+	add %ah, 0x0(%edx)
+	add %al, (%eax)
+	add (%eax), %al
+	jz 0x121d
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %ch, (%esi)
+	jae 0x129e
+	insd 
+	jz 0x1289
+	%eax,(%eax)
+	jae 0x12a1
+	jb 0x12a3
+	popad 
+	%eax,(%eax)
+	jae 0x129d
+	jae 0x12ab
+	jb 0x12ad
+	popad 
+	%eax,(%eax)
+	imul $0x707265, %cs:0x74(%esi), %ebp
+	outsb 
+	outsd 
+	jz 0x12ae
+	inc %ecx
+	inc %edx
+	dec %ecx
+	sub $0x676174, %eax
+	outsb 
+	outsd 
+	jz 0x12bc
+	a16 outsb 
+	jnz 0x128a
+	%esi,0x69(%ebp)
+	insb 
+	sub $0x2e006469, %eax
+	a16 outsb 
+	jnz 0x1298
+	push $0x687361
+	jns 0x12e1
+	jae 0x12ee
+	insd 
+	add %ch, (%esi)
+	jns 0x12e9
+	jae 0x12f1
+	jb 0x127f
+	a16 outsb 
+	jnz 0x12b2
+	jbe 0x12eb
+	jb 0x12fb
+	imul $0x6e672e00, 0x6e(%edi), %ebp
+	jnz 0x12bf
+	jbe 0x12f8
+	jb 0x1308
+	imul $0x2e00725f, 0x6e(%edi), %ebp
+	jb 0x1303
+	insb 
+	jns 0x1311
+	add %ch, (%esi)
+	jb 0x130c
+	insb 
+	jo 0x1317
+	jz 0x12ad
+	imul $0x742e0074, %cs:0x69(%esi), %ebp
+	js 0x132c
+	add %ch, (%esi)
+	imul $0x2e00, 0x69(%esi), %bp
+	jb 0x1331
+	popad 
+	jz 0x1327
+	add %ch, (%esi)
+	push $0x6172665f
+	insd 
+	pop %edi
+	push $0x2e007264
+	push $0x6172665f
+	insd 
+	add %ch, %gs:(%esi)
+	arpl %si, 0x72(%edi,%ebp,2)
+	jae 0x12e6
+	jz 0x1359
+	jb 0x135f
+	add %ch, (%esi)
+	push $0x63
+	jb 0x12f2
+	jns 0x1364
+	popad 
+	insd 
+	imul $0x746f672e, 0x0(%ebx), %esp
+	add %ch, (%esi)
+	a16 outsd 
+	jz 0x1333
+	jo 0x1373
+	jz 0x1309
+	popad 
+	jz 0x136f
+	add %ch, (%esi)
+	%esi,0x73(%ebx)
+	add %ch, (%esi)
+	arpl %bp, 0x6d(%edi)
+	insd 
+	outsb 
+	jz 0x131d
+	%esi,%gs:0x67(%ebp)
+	pop %edi
+	popad 
+	jb 0x1388
+	outsb 
+	a16 jae 0x132c
+	%esi,%gs:0x67(%ebp)
+	pop %edi
+	imul $0x642e006f, 0x66(%esi), %ebp
+	%esi,%gs:0x67(%ebp)
+	pop %edi
+	popad 
+	%esp,0x72(%edx)
+	jbe 0x1346
+	%esi,%gs:0x67(%ebp)
+	pop %edi
+	insb 
+	imul $0x65642e00, 0x65(%esi), %ebp
+	%esi,0x67(%ebp)
+	pop %edi
+	jae 0x13cf
+	jb 0x135d
+	%esi,%gs:0x67(%ebp)
+	pop %edi
+	insb 
+	outsd 
+	arpl %ax, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	sbb (%eax), %eax
+	add %al, (%eax)
+	add %eax, (%eax)
+	add %al, (%eax)
+	add (%eax), %al
+	add %al, (%eax)
+	push %esp
+	add $0x154, (%eax,%ecx)
+	adc (%eax), %eax
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	and (%eax), %eax
+	add %al, (%eax)
+	pop %es
+	add %al, (%eax)
+	add %al, (%edx)
+	add %al, (%eax)
+	add %ch, -0x7f(%eax)
+	add $0x8, %al
+	push $0x20000001
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax,%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	xor %eax, (%eax)
+	add %al, (%eax)
+	pop %es
+	add %al, (%eax)
+	add %al, (%edx)
+	add %al, (%eax)
+	add %cl, 0x88080481(%eax)
+	add %eax, (%eax)
+	add %ah, (%eax,%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add $0x0, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	inc %esp
+	add %al, (%eax)
+	add %dh, %dh
+	invalid 
+	outsd 
+	add (%eax), %al
+	add %al, (%eax)
+	lodsb 
+	add $0x1ac, (%eax,%ecx)
+	and %al, (%eax)
+	add %al, (%eax)
+	add $0x0, %eax
+	add %al, (%eax)
+	add %al, (%eax,%eax)
+	add %al, (%eax)
+	add $0x0, %al
+	add %al, (%eax)
+	dec %esi
+	add %al, (%eax)
+	add %cl, (%ebx)
+	add %al, (%eax)
+	add %al, (%edx)
+	add %al, (%eax)
+	add %cl, %ah
+	add $0x1cc, (%eax,%ecx)
+	inc %eax
+	add %al, (%eax)
+	add %al, (%esi)
+	add %al, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %al, (%eax,%eax)
+	add %al, (%eax)
+	adc %al, (%eax)
+	add %al, (%eax)
+	push %esi
+	add %al, (%eax)
+	add %al, (%ebx)
+	add %al, (%eax)
+	add %al, (%edx)
+	add %al, (%eax)
+	add %cl, (%edx,%eax,4)
+	add $0x8, %al
+	or $0x2, %al
+	add %al, (%eax)
+	inc %ebp
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %bl, 0x0(%esi)
+	add %al, (%eax)
+	invalid 
+	ljmp *0x2(%edi)
+	add %al, (%eax)
+	add %dl, -0x7e(%edx)
+	add $0x8, %al
+	push %edx
+	add (%eax), %al
+	add %cl, (%eax)
+	add %al, (%eax)
+	add %al, 0x0
+	add %al, (%eax)
+	add %al, (%edx)
+	add %al, (%eax)
+	add %al, (%edx)
+	add %al, (%eax)
+	add %ch, 0x0(%ebx)
+	add %al, (%eax)
+	invalid 
+	ljmp *0x2(%edi)
+	add %al, (%eax)
+	add %bl, 0x4(%edx,%eax,4)
+	or %bl, 0x0(%edx,%eax)
+	add %ah, (%eax)
+	add %al, (%eax)
+	add %al, (%esi)
+	add %al, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %al, (%eax,%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	jp 0x14d2
+	add %al, (%eax)
+	or %eax, (%eax)
+	add %al, (%eax)
+	add (%eax), %al
+	add %al, (%eax)
+	jl 0x1460
+	add $0x8, %al
+	jl 0x14e4
+	add %al, (%eax)
+	or %al, (%eax)
+	add %al, (%eax)
+	add $0x0, %eax
+	add %al, (%eax)
+	add %al, (%eax,%eax)
+	add %al, (%eax)
+	or %al, (%eax)
+	add %al, (%eax)
+	add $0x0, (%eax)
+	add %cl, (%ecx)
+	add %al, (%eax)
+	add %al, (%edx)
+	add %al, (%eax)
+	add %al, 0x2840804(%edx,%eax,4)
+	add %al, (%eax)
+	adc %al, (%eax)
+	add %al, (%eax)
+	add $0xc000000, %eax
+	add %al, (%eax)
+	add %al, (%eax,%eax)
+	add %al, (%eax)
+	or %al, (%eax)
+	add %al, (%eax)
+	mov %es, (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	add %al, (%eax)
+	push %es
+	add %al, (%eax)
+	add %dl, 0x2940804(%edx,%eax,4)
+	add %al, (%eax)
+	add %al, %cs:(%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax,%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	xchg %eax, (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	add %al, (%eax)
+	push %es
+	add %al, (%eax)
+	add %dl, %al
+	addb $0xd0, (%eax,%ecx)
+	add (%eax), %al
+	add %dh, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %dl, (%eax)
+	add %al, (%eax)
+	add %al, (%eax,%eax)
+	add %al, (%eax)
+	xchg %eax, %edx
+	add %al, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %al, (%esi)
+	add %al, (%eax)
+	add %al, (%eax)
+	add $0x0, (%eax,%ecx)
+	add (%eax), %eax
+	add %cl, %ah
+	add %eax, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %dl, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %bl, 0x1000000(%eax)
+	add %al, (%eax)
+	add %al, (%esi)
+	add %al, (%eax)
+	add %cl, %ah
+	test %al, (%eax,%ecx)
+	int3 
+	add $0x0, %al
+	add %bl, (%edx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax,%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	sahf 
+	add %al, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %al, (%edx)
+	add %al, (%eax)
+	add %ch, %al
+	test %al, (%eax,%ecx)
+	call 0x80015d9
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax,%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	cmpsb 
+	add %al, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %al, (%edx)
+	add %al, (%eax)
+	add %dh, %al
+	test %al, (%eax,%ecx)
+	lock add $0x0, %al
+	add %dh, (%eax,%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add $0x0, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	mov $0x0, %ah
+	add %al, (%eax)
+	add %eax, (%eax)
+	add %al, (%eax)
+	add (%eax), %al
+	add %al, (%eax)
+	and $0x85, %al
+	add $0x8, %al
+	and $0x5, %al
+	add %al, (%eax)
+	les (%eax), %eax
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add $0x0, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	mov $0x1000000, %esi
+	add %al, (%eax)
+	add %al, (%ebx)
+	add %al, (%eax)
+	add %dl, (%edi,%ebx,4)
+	add $0x8, %al
+	adc $0xf, %al
+	add %al, (%eax)
+	or %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add $0x0, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	lds (%eax), %eax
+	add %al, (%eax)
+	add %eax, (%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	add %al, (%eax)
+	sbb $0x9f, %al
+	add $0x8, %al
+	sbb $0xf, %al
+	add %al, (%eax)
+	or %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add $0x0, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	int3 
+	add %al, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %al, (%ebx)
+	add %al, (%eax)
+	add %ah, (%edi,%ebx,4)
+	add $0x8, %al
+	and $0xf, %al
+	add %al, (%eax)
+	add $0x0, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add $0x0, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	rol , (%eax)
+	add %al, (%eax)
+	push %es
+	add %al, (%eax)
+	add %al, (%ebx)
+	add %al, (%eax)
+	add %ch, (%eax)
+	lahf 
+	add $0x8, %al
+	sub %cl, (%edi)
+	add %al, (%eax)
+	$0x0,$0x0
+	push %es
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax,%eax)
+	add %al, (%eax)
+	or %al, (%eax)
+	add %al, (%eax)
+	fiadd (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	add %al, (%eax)
+	lock lahf 
+	add $0x8, %al
+	lock sldt (%eax)
+	add $0x0, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add $0x0, %al
+	add %al, (%eax)
+	add $0x0, %al
+	add %al, (%eax)
+	fildw (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	add %al, (%eax)
+	hlt 
+	lahf 
+	add $0x8, %al
+	hlt 
+	sldt (%eax)
+	adc $0x0, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add $0x0, %al
+	add %al, (%eax)
+	add $0x0, %al
+	add %al, (%eax)
+	call 0x100172d
+	add %al, (%eax)
+	add %al, (%ebx)
+	add %al, (%eax)
+	add %cl, (%eax)
+	mov 0x10080804, %al
+	add %al, (%eax)
+	or %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add $0x0, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	out %al, %dx
+	add %al, (%eax)
+	add %cl, (%eax)
+	add %al, (%eax)
+	add %al, (%ebx)
+	add %al, (%eax)
+	add %dl, (%eax)
+	mov 0x10100804, %al
+	add %al, (%eax)
+	or %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add $0x0, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	rep add %al, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %dh, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %dl, (%eax)
+	adc %al, (%eax)
+	add %ch, (%edx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %bh, %ah
+	add %al, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %bh, (%edx)
+	adc %al, (%eax)
+	add %ah, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %cl, (%ebx)
+	add %eax, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %bl, 0x10(%edx)
+	add %al, (%eax)
+	jo 0x17de
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	pop %ss
+	add %eax, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %cl, %dl
+	adc %al, (%eax)
+	add %al, 0x0(%ebx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	and $0x1000001, %eax
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %cl, 0x7a000011
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %dh, (%ecx)
+	add %eax, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %dh, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, 0x62000011(%edi)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %bh, (%ecx,%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	jmp 0x3800188e
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %dl, (%ecx)
+	add %al, (%eax)
+	add %al, (%ebx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %ah, (%ecx)
+	adc (%eax), %al
+	add %al, 0x1(%edi)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	add %al, (%eax)
+	add (%eax), %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	or %bl, (%ecx)
+	add %al, (%eax)
+	pushad 
+	add $0x0, %al
+	add %ah, (%ebx)
+	add %al, (%eax)
+	add %dh, (%ebx)
+	add %al, (%eax)
+	add %al, (%eax,%eax)
+	add %al, (%eax)
+	adc %al, (%eax)
+	add %al, (%eax)
+	or %eax, (%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	push $0xea00001d
+	add %eax, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %dl, 0x4(%ecx,%eax,4)
+	or %al, (%eax)
+	add %al, (%eax)
+	add %al, (%ebx)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %ch, -0x7f(%eax)
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	add (%eax), %al
+	add %al, (%eax)
+	add %al, (%eax)
+	mov %al, 0x804(%ecx)
+	add %al, (%eax)
+	add (%eax), %eax
+	add (%eax), %eax
+	add %al, (%eax)
+	add %al, (%eax)
+	lodsb 
+	add $0x0, (%eax,%ecx)
+	add (%eax), %eax
+	add $0x0, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	int3 
+	add $0x0, (%eax,%ecx)
+	add (%eax), %eax
+	add $0x0, %eax
+	add %cl, (%edx,%eax,4)
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	push %es
+	add %al, (%eax)
+	add %al, (%eax)
+	add %dl, -0x7e(%edx)
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	pop %es
+	add %al, (%eax)
+	add %al, (%eax)
+	add %bl, 0x4(%edx,%eax,4)
+	or %al, (%eax)
+	add %al, (%eax)
+	add %al, (%ebx)
+	add %cl, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %bh, 0x4(%edx,%eax,4)
+	or %al, (%eax)
+	add %al, (%eax)
+	add %al, (%ebx)
+	add %cl, (%ecx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, 0x804(%edx,%eax,4)
+	add %al, (%eax)
+	add (%eax), %eax
+	or (%eax), %al
+	add %al, (%eax)
+	add %al, (%eax)
+	xchg %eax, %esp
+	addb $0x0, (%eax,%ecx)
+	add %al, (%eax)
+	add %al, (%ebx)
+	add %cl, (%ebx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %dl, %al
+	addb $0x0, (%eax,%ecx)
+	add %al, (%eax)
+	add %al, (%ebx)
+	add %cl, (%eax,%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, 0x804(%ebx)
+	add %al, (%eax)
+	add (%eax), %eax
+	or $0x0, %eax
+	add %cl, %ah
+	test %al, (%eax,%ecx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	push %cs
+	add %al, (%eax)
+	add %al, (%eax)
+	add %ch, %al
+	test %al, (%eax,%ecx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	sldt (%eax)
+	add %al, (%eax)
+	add %dh, %al
+	test %al, (%eax,%ecx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	adc %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	and $0x85, %al
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	adc %eax, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	adc $0x9f, %al
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	adc (%eax), %al
+	add %al, (%eax)
+	add %al, (%eax)
+	sbb $0x9f, %al
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	adc (%eax), %eax
+	add %al, (%eax)
+	add %al, (%eax)
+	and $0x9f, %al
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	adc $0x0, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	sub %bl, 0x804(%edi)
+	add %al, (%eax)
+	add (%eax), %eax
+	adc $0x0, %eax
+	add %dh, %al
+	lahf 
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	push %ss
+	add %al, (%eax)
+	add %al, (%eax)
+	add %dh, %ah
+	lahf 
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	pop %ss
+	add %al, (%eax)
+	add %al, (%eax)
+	add %cl, (%eax)
+	mov 0x804, %al
+	add %al, (%eax)
+	add (%eax), %eax
+	sbb %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	adc %ah, 0x804(%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	sbb %eax, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	sbb (%eax), %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	sbb (%eax), %eax
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	sbb $0x0, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add (%eax), %eax
+	sbb $0x0, %eax
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%ebx)
+	add %bl, (%esi)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%ebx)
+	add %bl, (%edi)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%ebx)
+	add %ah, (%eax)
+	add %al, (%ecx)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax,%eax)
+	int1 
+	dec (%eax,%eax)
+	add %al, (%eax)
+	adc $0x9f, %al
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	adc (%eax), %al
+	sbb (%eax), %al
+	add %al, (%eax)
+	sbb $0x9f, %al
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	adc (%eax), %eax
+	sub %al, (%eax)
+	add %al, (%eax)
+	and $0x9f, %al
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	adc $0x0, %al
+	xor $0x30000000, %eax
+	add $0x0, (%eax,%ecx)
+	add %al, (%eax)
+	add %al, (%edx)
+	add %cl, 0x4b00
+	add %dl, (%eax)
+	mov 0x10804, %al
+	add %al, (%eax)
+	add %eax, (%eax)
+	sbb %eax, (%eax)
+	pop %edx
+	add %al, (%eax)
+	add %dl, (%eax)
+	add $0x8, %al
+	add $0x0, %al
+	add %al, (%eax)
+	add %eax, (%eax)
+	sbb %eax, (%eax)
+	push $0x90000000
+	add $0x0, (%eax,%ecx)
+	add %al, (%eax)
+	add %al, (%edx)
+	add %cl, 0x100
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax,%eax)
+	int1 
+	push 0x0(%eax,%eax)
+	add %bl, (%eax)
+	lahf 
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	adc (%eax), %al
+	add $0x85e40000, (%eax)
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	adc %eax, (%eax)
+	pop (%eax)
+	add %al, (%eax)
+	and $0x9f, %al
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	adc $0x0, %al
+	wait 
+	add %al, (%eax)
+	add %ah, 0x80484(%eax)
+	add %al, (%eax)
+	add %al, (%edx)
+	add %cl, 0xb100
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax,%eax)
+	int1 
+	invalid 
+	add %al, (%eax)
+	add %dl, (%edi,%ebx,4)
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	adc (%eax), %al
+	leave 
+	add %al, (%eax)
+	add %ch, (%eax)
+	lahf 
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	adc $0xd200, %eax
+	add %dl, (%edi,%ebx,4)
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	adc (%eax), %al
+	in $0x0, %eax
+	add %al, (%eax)
+	hlt 
+	lahf 
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	add %eax, (%eax)
+	pop %ss
+	add %bh, %bl
+	add %al, (%eax)
+	add %dl, 0x2080484(%eax)
+	add %al, (%eax)
+	add %dl, (%edx)
+	add %cl, 0x10b00
+	add %dl, 0x80484(%edx)
+	add %al, (%eax)
+	add %dl, (%edx)
+	add 0x12200, %cl
+	add %cl, (%eax)
+	mov 0x804, %al
+	add %al, (%eax)
+	and %al, (%eax)
+	sbb %al, (%eax)
+	sub $0x10000001, %eax
+	mov 0x804, %al
+	add %al, (%eax)
+	adc %al, (%eax)
+	int1 
+	push (%ecx,%eax)
+	add %al, (%eax)
+	int3 
+	test %al, (%eax,%ecx)
+	add %al, (%eax)
+	add %al, (%eax)
+	adc (%eax), %al
+	push %cs
+	add %bh, (%edx)
+	add %eax, (%eax)
+	add %ah, (%eax)
+	lahf 
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	adc %eax, (%edx)
+	adc (%eax), %eax
+	inc %edi
+	add %eax, (%eax)
+	add %cl, (%eax)
+	mov 0x804, %al
+	add %al, (%eax)
+	adc %al, (%eax)
+	sbb %al, (%eax)
+	push %esp
+	add %eax, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %ah, (%eax)
+	add %al, (%eax)
+	add %ah, 0x1(%ebx)
+	add %al, (%eax)
+	or $0xa0, %al
+	add $0x8, %al
+	add %al, (%eax)
+	add %al, (%eax)
+	adc %eax, (%edx)
+	sbb %al, (%eax)
+	jo 0x1ccb
+	add %al, (%eax)
+	in %dx, %al
+	test %al, (%eax,%ecx)
+	add $0x0, %al
+	add %al, (%eax)
+	adc %eax, (%eax)
+	invalid 
+	add %eax, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %dl, (%edx)
+	add %al, (%eax)
+	add %bl, 0x84200000(%ecx,%eax)
+	add $0x8, %al
+	popad 
+	add %al, (%eax)
+	add %dl, (%edx)
+	add %cl, 0x1ac00
+	add %bl, (%eax)
+	mov 0x804, %al
+	add %al, (%eax)
+	adc %al, (%eax)
+	int1 
+	push 0x1(%ecx)
+	add $0x0, (%eax,%ecx)
+	add %al, (%eax)
+	add %dl, (%edx)
+	add %cl, 0x1b800
+	add %ch, %al
+	test %al, (%eax,%ecx)
+	add $0x0, %al
+	add %al, (%eax)
+	adc %eax, (%eax)
+	invalid 
+	add %eax, (%eax)
+	add %dl, (%eax)
+	mov 0x804, %al
+	add %al, (%eax)
+	adc %al, (%eax)
+	int1 
+	dec %ebx
+	add %eax, (%eax)
+	add %dh, 0x620804(%ebx,%eax,4)
+	add %al, (%eax)
+	adc (%eax), %al
+	or $0x1d000, %eax
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %al, (%eax)
+	add %ah, (%eax)
+	add %al, (%eax)
+	add %ah, %ah
+	add %eax, (%eax)
+	add %dl, 0x804(%edx,%eax,4)
+	add %al, (%eax)
+	adc (%eax), %al
+	or (%eax), %eax
+	add %ah, 0x72(%ebx)
+	jz 0x1de0
+	jz 0x1de4
+	o16 arpl %ax, %cs:(%eax)
+	pop %edi
+	pop %edi
+	inc %ebx
+	push %esp
+	dec %edi
+	push %edx
+	pop %edi
+	dec %esp
+	dec %ecx
+	push %ebx
+	push %esp
+	pop %edi
+	pop %edi
+	add %bl, 0x5f(%edi)
+	inc %esp
+	push %esp
+	dec %edi
+	push %edx
+	pop %edi
+	dec %esp
+	dec %ecx
+	push %ebx
+	push %esp
+	pop %edi
+	pop %edi
+	add %bl, 0x5f(%edi)
+	dec %edx
+	inc %ebx
+	push %edx
+	pop %edi
+	dec %esp
+	dec %ecx
+	push %ebx
+	push %esp
+	pop %edi
+	pop %edi
+	add %bl, 0x5f(%edi)
+	outsd 
+	pop %edi
+	a16 insb 
+	outsd 
+	%esp,0x6c(%ecx)
+	pop %edi
+	jz 0x1e1b
+	jb 0x1e21
+	pop %edi
+	popad 
+	jnz 0x1e2a
+	add %ah, 0x6f(%ebx)
+	insd 
+	jo 0x1e24
+	jz 0x1e20
+	xor %esi, %ss:0x74640039
+	outsd 
+	jb 0x1e26
+	imul $0x31363136, 0x2e(%eax,%edi,2), %esp
+	add %ah, 0x72(%esi)
+	popad 
+	insd 
+	pop %edi
+	jnz 0x1e46
+	insd 
+	jns 0x1ddc
+	pop %edi
+	pop %edi
+	inc %ebx
+	push %esp
+	dec %edi
+	push %edx
+	pop %edi
+	inc %ebp
+	dec %esi
+	inc %esp
+	pop %edi
+	pop %edi
+	add %bl, 0x5f(%edi)
+	inc %esi
+	push %edx
+	inc %ecx
+	dec %ebp
+	inc %ebp
+	pop %edi
+	inc %ebp
+	dec %esi
+	inc %esp
+	pop %edi
+	pop %edi
+	add %bl, 0x5f(%edi)
+	dec %edx
+	inc %ebx
+	push %edx
+	pop %edi
+	inc %ebp
+	dec %esi
+	inc %esp
+	pop %edi
+	pop %edi
+	add %bl, 0x5f(%edi)
+	outsd 
+	pop %edi
+	a16 insb 
+	outsd 
+	%esp,0x6c(%ecx)
+	pop %edi
+	arpl %si, 0x72(%edi,%ebp,2)
+	jae 0x1e74
+	popad 
+	jnz 0x1e90
+	add %ch, 0x61(%ebp)
+	imul $0x5f5f0063, 0x2e(%esi), %ebp
+	imul $0x72615f74, 0x69(%esi), %ebp
+	jb 0x1e8c
+	jns 0x1e8c
+	outsb 
+	add %bl, %fs:0x44(%edi)
+	pop %ecx
+	dec %esi
+	inc %ecx
+	dec %ebp
+	dec %ecx
+	inc %ebx
+	add %bl, 0x5f(%edi)
+	imul $0x72615f74, 0x69(%esi), %ebp
+	jb 0x1ea6
+	jns 0x1ea6
+	jae 0x1ebd
+	popad 
+	jb 0x1ec0
+	add %bl, 0x47(%edi)
+	dec %esp
+	dec %edi
+	inc %edx
+	inc %ecx
+	dec %esp
+	pop %edi
+	dec %edi
+	inc %esi
+	inc %esi
+	push %ebx
+	inc %ebp
+	push %esp
+	pop %edi
+	push %esp
+	inc %ecx
+	inc %edx
+	dec %esp
+	inc %ebp
+	pop %edi
+	add %bl, 0x5f(%edi)
+	insb 
+	imul $0x7573635f, 0x63(%edx), %esp
+	pop %edi
+	imul $0x5f00, 0x69(%esi), %bp
+	pop %edi
+	imul $0x672e3638, (%esi), %esi
+	jz 0x1edd
+	jo 0x1ee3
+	pop %edi
+	jz 0x1eeb
+	jnz 0x1ef3
+	imul $0x62, (%esi), %ebp
+	js 0x1e8a
+	popad 
+	jz 0x1eef
+	pop %edi
+	jae 0x1f05
+	popad 
+	jb 0x1f08
+	add %bl, 0x65(%edi)
+	popad 
+	jz 0x1efc
+	add %bl, 0x66(%edi)
+	imul $0x445f5f00, 0x69(%esi), %ebp
+	push %esp
+	dec %edi
+	push %edx
+	pop %edi
+	inc %ebp
+	dec %esi
+	inc %esp
+	pop %edi
+	pop %edi
+	add %bl, 0x5f(%edi)
+	popad 
+	jz 0x1f16
+	pop %edi
+	jae 0x1f2c
+	popad 
+	jb 0x1f2f
+	add %bl, 0x5f(%edi)
+	a16 insd 
+	outsd 
+	outsb 
+	pop %edi
+	jae 0x1f39
+	popad 
+	jb 0x1f3c
+	pop %edi
+	pop %edi
+	add %bl, 0x5f(%edi)
+	jae 0x1f3f
+	pop %edi
+	push $0x6c646e61
+	add %bl, %gs:0x49(%edi)
+	dec %edi
+	pop %edi
+	jae 0x1f52
+	imul $0x64657375, %fs:0x5f(%esi), %ebp
+	add %bl, 0x5f(%edi)
+	insb 
+	imul $0x6174735f, 0x63(%edx), %esp
+	jb 0x1f67
+	pop %edi
+	insd 
+	popad 
+	imul $0x494c4740, 0x40(%esi), %ebp
+	inc %edx
+	inc %ebx
+	pop %edi
+	xor (%esi), %ch
+	xor %al, (%eax)
+	pop %edi
+	pop %edi
+	insb 
+	imul $0x7573635f, 0x63(%edx), %esp
+	pop %edi
+	imul $0x655f0074, 0x69(%esi), %ebp
+	outsb 
+	add %bl, %fs:0x73(%edi)
+	jz 0x1f7e
+	jb 0x1f93
+	add %bl, 0x66(%edi)
+	jo 0x1f83
+	push $0x5f5f0077
+	%esi,0x73(%ebx)
+	pop %edi
+	jae 0x1fa3
+	popad 
+	jb 0x1fa6
+	add %ch, 0x61(%ebp)
+	imul $0x5f764a5f, 0x0(%esi), %ebp
+	push %edx
+	imul $0x6c437265, %gs:0x74(%bp,%di), %esi
+	popad 
+	jae 0x1fbc
+	jae 0x1f4c
+	pop %edi
+	invalid 

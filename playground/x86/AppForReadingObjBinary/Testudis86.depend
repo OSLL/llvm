@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1354541606 source:/home/denis/Code_Blocks_projects/Testudis86/main.c
+	<stdio.h>
+	<udis86.h>
+
