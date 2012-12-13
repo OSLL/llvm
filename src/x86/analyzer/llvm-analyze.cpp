@@ -202,28 +202,6 @@ static int disassembleSymbol(	const llvm::object::SymbolRef& sym,
 	return 0;
 }
 
-	struct Operand {
-		enum Size {
-			S8,
-			S16,
-			S32,
-			S64
-		};
-
-		enum Storage {
-			Register,
-			Memory,
-			Immediate
-		};
-
-		Size size;
-		Storage storage;
-
-		Operand(Size _size, Storage _storage) {
-			size = _size;
-			storage = _storage;
-		}
-	};
 
 static void analyzeStackReferences(std::deque<llvm::MCInst>& block) {
 
@@ -234,54 +212,6 @@ static void analyzeStackReferences(std::deque<llvm::MCInst>& block) {
 		llvm::MCInst& inst = *it;
 		const llvm::MCInstrDesc& id = mii->get(inst.getOpcode());
 		llvm::StringRef iname = mii->getName(inst.getOpcode());
-		size_t instNameLen = iname.size();
-		const char* p = iname.end() - 2;
-
-		std::vector<Operand> ops;
-		Operand::Size opSize;
-
-		// Find instruciton operands size
-		for (; p != iname.data(); --p) {
-			if (p[0] == '3' && p[1] == '2') {
-				opSize = Operand::S32;
-				break;
-			}
-
-			if (p[0] == '6' && p[1] == '4') {
-				opSize = Operand::S64;
-				break;
-			}
-		}
-
-		p += 2;
-
-		while (p != iname.end()) {
-			if (*p == 'r') {
-				ops.push_back(Operand(opSize, Operand::Register)); 
-			} else if (*p == 'm') {
-				ops.push_back(Operand(opSize, Operand::Memory));
-			} else if (*p == 'i') {
-				Operand::Size immSize = opSize;
-
-				if (isdigit(p[1])) {
-					if (p[1] == '8') {
-						immSize = Operand::S8;
-					}
-				}
-
-				ops.push_back(Operand(immSize, Operand::Immediate));
-			}
-		}
-
-		unsigned cop = 0;
-
-		for (OpIter iop = ops.begin(); iop != ops.end(); ++iop) {
-			if (iop->storage == Operand::Memory) {
-				cop += 5;
-			} else {
-				cop++;
-			}
-		}
 	}
 }
 
