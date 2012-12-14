@@ -66,6 +66,38 @@ public:
 
 // ----------------------------------------------------------------------------
 
+static void printInst(const llvm::MCInst& inst) {
+	const llvm::MCInstrDesc& id = mii->get(inst.getOpcode());
+	llvm::outs() << mii->getName(inst.getOpcode()) << " (" << inst.getNumOperands() << ") ";
+
+	for (int iop = 0; iop < inst.getNumOperands(); ++iop) {
+		const llvm::MCOperand& op = inst.getOperand(iop);
+
+		if (op.isReg()) {
+			unsigned reg = op.getReg();
+			const char* rcName;
+			char clsn[128];
+
+			if (id.OpInfo[iop].RegClass < mri->getNumRegClasses()) {
+				const llvm::MCRegisterClass& rc = mri->getRegClass(id.OpInfo[iop].RegClass);
+				rcName = rc.getName();
+			} else {
+				snprintf(clsn, sizeof(clsn), "CLS%d", id.OpInfo[iop].RegClass);
+				rcName = clsn;
+			}
+			llvm::outs() << mri->getName(reg) << "(" << rcName << ", " << (uint64_t)id.OpInfo[iop].OperandType << ")";
+		} else if (op.isImm()) {
+			llvm::outs() << op.getImm() << "(" << (uint64_t)id.OpInfo[iop].OperandType << ")";
+		} else {
+			llvm::outs() << "<UNK>";
+		}
+
+		llvm::outs() << ", ";
+	}
+
+	llvm::outs() << "\n";
+}
+
 static void disassembleLinearBlock(	const llvm::MemoryObject& data, 
 									uint64_t start, uint64_t end,
 									std::deque<llvm::MCInst>& result) {
@@ -85,69 +117,13 @@ static void disassembleLinearBlock(	const llvm::MemoryObject& data,
 			break;
 		}
 
-		result.push_back(inst);
-
-		const llvm::MCInstrDesc& id = mii->get(inst.getOpcode());
-		llvm::outs() << ptr << ": " << mii->getName(inst.getOpcode()) << " (" << inst.getNumOperands() << ") ";
-
 		ptr += instSize;
 
-		for (int iop = 0; iop < inst.getNumOperands(); ++iop) {
-			const llvm::MCOperand& op = inst.getOperand(iop);
+		result.push_back(inst);
+		const llvm::MCInstrDesc& id = mii->get(inst.getOpcode());
 
-			if (op.isReg()) {
-				unsigned reg = op.getReg();
-				const char* rcName;
-				char clsn[128];
-
-				if (id.OpInfo[iop].RegClass < mri->getNumRegClasses()) {
-					const llvm::MCRegisterClass& rc = mri->getRegClass(id.OpInfo[iop].RegClass);
-					rcName = rc.getName();
-				} else {
-					snprintf(clsn, sizeof(clsn), "CLS%d", id.OpInfo[iop].RegClass);
-					rcName = clsn;
-				}
-				llvm::outs() << mri->getName(reg) << "(" << rcName << ", " << (uint64_t)id.OpInfo[iop].OperandType << ")";
-			} else if (op.isImm()) {
-				llvm::outs() << op.getImm() << "(" << (uint64_t)id.OpInfo[iop].OperandType << ")";
-			} else {
-				llvm::outs() << "<UNK>";
-			}
-
-			llvm::outs() << ", ";
-		}
-
-		if (id.isUnconditionalBranch()) {
-			if (id.OpInfo[0].OperandType == llvm::MCOI::OPERAND_PCREL) {
-				const llvm::MCOperand& op = inst.getOperand(0);
-
-				if (op.isImm()) {
-					llvm::outs() << " " << op.getImm() << "\n";
-				} else if (op.isExpr()) {
-					llvm::outs() << " " << op.getExpr()->getKind() << "\n";
-				} else {
-					llvm::outs() << " UNKNOWN!\n";
-				}
-			}
-		} else if (id.isConditionalBranch()) {
-			if (id.OpInfo[0].OperandType == llvm::MCOI::OPERAND_PCREL) {
-				const llvm::MCOperand& op = inst.getOperand(0);
-
-				if (op.isImm()) {
-					llvm::outs() << " " << op.getImm() << "\n";
-				} else if (op.isExpr()) {
-					llvm::outs() << " " << op.getExpr()->getKind() << "\n";
-				} else if (op.isReg()) {
-					llvm::outs() << " " << mri->get(op.getReg()).Name << "\n";
-				} else {
-					llvm::outs() << " UNKNOWN!\n";
-				}
-
-				break;
-			}
-		}
-
-		llvm::outs() << "\n";
+		if (id.isUnconditionalBranch() || id.isConditionalBranch())
+			break;
 	}
 }
 
@@ -206,12 +182,23 @@ static int disassembleSymbol(	const llvm::object::SymbolRef& sym,
 static void analyzeStackReferences(std::deque<llvm::MCInst>& block) {
 
 	typedef std::deque<llvm::MCInst>::iterator InstIter;
-	typedef std::vector<Operand>::iterator OpIter;
 
 	for (InstIter it = block.begin(); it != block.end(); ++it) {
 		llvm::MCInst& inst = *it;
 		const llvm::MCInstrDesc& id = mii->get(inst.getOpcode());
 		llvm::StringRef iname = mii->getName(inst.getOpcode());
+
+		for (unsigned iop = 0; iop < inst.getNumOperands(); ++iop) {
+			if (id.OpInfo[iop].OperandType == llvm::MCOI::OPERAND_MEMORY) {
+				const llvm::MCOperand& op = inst.getOperand(iop);
+
+				if (op.isReg() && strcmp(mri->getName(op.getReg()), "RBP") == 0)
+					printInst(inst);
+
+				iop += 5;
+				break;
+			}
+		}
 	}
 }
 
