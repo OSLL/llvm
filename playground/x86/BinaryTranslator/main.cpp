@@ -11,12 +11,19 @@ int main()
     ud_set_mode(&ud_obj, 32);
     ud_set_syntax(&ud_obj, UD_SYN_ATT);
 
+    CPUstate env = 0;
     while (ud_disassemble(&ud_obj))
     {
         switch (ud_obj.mnemonic)
         {
-        case UD_Imov: Mov(env, &ud_obj);
-        case UD_Iadd: Add(env, &ud_obj);
+        case UD_Imov:
+            Mov(env, &ud_obj);
+            break;
+        case UD_Iadd:
+            Add(env, &ud_obj);
+            break;
+        default:
+            break;
         }
     }
 
