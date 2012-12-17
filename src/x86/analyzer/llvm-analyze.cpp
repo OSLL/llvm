@@ -7,6 +7,7 @@
 #include <string>
 #include <deque>
 #include <set>
+#include <map>
 
 #include <llvm/Object/ObjectFile.h>
 #include <llvm/Support/MemoryObject.h>
@@ -28,6 +29,8 @@
 #include <llvm/Support/ManagedStatic.h>
 #include <llvm/Support/Casting.h>
 
+#include <llvm-c/Core.h>
+
 // ----------------------------------------------------------------------------
 
 struct LinearBlock {
@@ -38,12 +41,18 @@ struct LinearBlock {
 		end(_end) { }
 };
 
+
+typedef std::deque<llvm::MCInst>::iterator InstIter;
+
 // ----------------------------------------------------------------------------
 
-static llvm::MCSubtargetInfo*	sti;
+static llvm::MCSubtargetInfo*	STI;
 static llvm::MCDisassembler*	disasm;
-static llvm::MCRegisterInfo*	mri;
-static llvm::MCInstrInfo*		mii;
+static llvm::MCRegisterInfo*	MRI;
+static llvm::MCInstrInfo*		MII;
+
+
+static LLVMBuilderRef			llvmBuilder;	
 
 // ----------------------------------------------------------------------------
 
@@ -67,8 +76,8 @@ public:
 // ----------------------------------------------------------------------------
 
 static void printInst(const llvm::MCInst& inst) {
-	const llvm::MCInstrDesc& id = mii->get(inst.getOpcode());
-	llvm::outs() << mii->getName(inst.getOpcode()) << " (" << inst.getNumOperands() << ") ";
+	const llvm::MCInstrDesc& id = MII->get(inst.getOpcode());
+	llvm::outs() << MII->getName(inst.getOpcode()) << " (" << inst.getNumOperands() << ") ";
 
 	for (int iop = 0; iop < inst.getNumOperands(); ++iop) {
 		const llvm::MCOperand& op = inst.getOperand(iop);
@@ -78,14 +87,14 @@ static void printInst(const llvm::MCInst& inst) {
 			const char* rcName;
 			char clsn[128];
 
-			if (id.OpInfo[iop].RegClass < mri->getNumRegClasses()) {
-				const llvm::MCRegisterClass& rc = mri->getRegClass(id.OpInfo[iop].RegClass);
+			if (id.OpInfo[iop].RegClass < MRI->getNumRegClasses()) {
+				const llvm::MCRegisterClass& rc = MRI->getRegClass(id.OpInfo[iop].RegClass);
 				rcName = rc.getName();
 			} else {
 				snprintf(clsn, sizeof(clsn), "CLS%d", id.OpInfo[iop].RegClass);
 				rcName = clsn;
 			}
-			llvm::outs() << mri->getName(reg) << "(" << rcName << ", " << (uint64_t)id.OpInfo[iop].OperandType << ")";
+			llvm::outs() << MRI->getName(reg) << "(" << rcName << ", " << (uint64_t)id.OpInfo[iop].OperandType << ")";
 		} else if (op.isImm()) {
 			llvm::outs() << op.getImm() << "(" << (uint64_t)id.OpInfo[iop].OperandType << ")";
 		} else {
@@ -120,7 +129,7 @@ static void disassembleLinearBlock(	const llvm::MemoryObject& data,
 		ptr += instSize;
 
 		result.push_back(inst);
-		const llvm::MCInstrDesc& id = mii->get(inst.getOpcode());
+		const llvm::MCInstrDesc& id = MII->get(inst.getOpcode());
 
 		if (id.isUnconditionalBranch() || id.isConditionalBranch())
 			break;
@@ -180,23 +189,100 @@ static int disassembleSymbol(	const llvm::object::SymbolRef& sym,
 
 
 static void analyzeStackReferences(std::deque<llvm::MCInst>& block) {
-
-	typedef std::deque<llvm::MCInst>::iterator InstIter;
-
 	for (InstIter it = block.begin(); it != block.end(); ++it) {
 		llvm::MCInst& inst = *it;
-		const llvm::MCInstrDesc& id = mii->get(inst.getOpcode());
-		llvm::StringRef iname = mii->getName(inst.getOpcode());
+		const llvm::MCInstrDesc& id = MII->get(inst.getOpcode());
+		llvm::StringRef iname = MII->getName(inst.getOpcode());
 
 		for (unsigned iop = 0; iop < inst.getNumOperands(); ++iop) {
 			if (id.OpInfo[iop].OperandType == llvm::MCOI::OPERAND_MEMORY) {
 				const llvm::MCOperand& op = inst.getOperand(iop);
 
-				if (op.isReg() && strcmp(mri->getName(op.getReg()), "RBP") == 0)
-					printInst(inst);
+				if (op.isReg() && strcmp(MRI->getName(op.getReg()), "RBP") == 0) {
+					LLVMBuildAlloca(llvmBuilder, LLVMInt32Type(), "");
+
+					//printInst(inst);
+				}
 
 				iop += 5;
 				break;
+			}
+		}
+	}
+}
+
+
+static std::string getLocalName(const llvm::MCInst& inst, unsigned iop) {
+	const llvm::MCOperand& op = inst.getOperand(iop);
+
+	if (op.isReg() && strcmp(MRI->getName(op.getReg()), "RBP") == 0) {
+		char buf[128];
+
+		snprintf(buf, 128, "local_%x", -inst.getOperand(iop + 3).getImm());
+		return std::string(buf);
+	} else {
+		return std::string("UNK");
+	}
+}
+
+static const char* getRegName(const llvm::MCInst& inst, unsigned iop) {
+	return MRI->getName(inst.getOperand(iop).getReg());
+}
+
+static void translateBlock(std::deque<llvm::MCInst>& block) {
+	typedef std::map<std::string, LLVMValueRef>::const_iterator ValRef;
+
+	std::map<std::string, LLVMValueRef> locals;
+	std::map<std::string, LLVMValueRef> regs;
+
+	for (InstIter it = block.begin(); it != block.end(); ++it) {
+		llvm::MCInst& inst = *it;
+		const llvm::MCInstrDesc& id = MII->get(inst.getOpcode());
+		llvm::StringRef iname = MII->getName(inst.getOpcode());
+
+		if (iname.startswith("MOV")) {
+			LLVMValueRef lhs;
+			unsigned iop = 0;
+
+			if (id.OpInfo[0].OperandType == llvm::MCOI::OPERAND_MEMORY) {
+				std::string localName = getLocalName(inst, 0);
+				ValRef pval = locals.find(localName); 
+				if (pval == locals.end()) {
+					lhs = LLVMBuildAlloca(llvmBuilder, LLVMInt32Type(), localName.c_str());
+					locals[localName] = lhs;
+				} else {
+					lhs = pval->second;
+				}
+
+				if (id.OpInfo[5].OperandType == llvm::MCOI::OPERAND_IMMEDIATE) {
+					const llvm::MCOperand& op = inst.getOperand(5);
+					LLVMBuildStore(llvmBuilder, lhs, LLVMConstInt(LLVMInt32Type(), op.getImm(), 0));
+				}
+
+				if (id.OpInfo[5].OperandType == llvm::MCOI::OPERAND_REGISTER) {
+					LLVMBuildStore(llvmBuilder, lhs, regs[getRegName(inst, 5)]);
+				}
+
+			} else if (id.OpInfo[0].OperandType == llvm::MCOI::OPERAND_REGISTER) {
+				LLVMValueRef rhs;
+
+				printInst(inst);
+				
+				if (id.OpInfo[1].OperandType == llvm::MCOI::OPERAND_IMMEDIATE) {
+					rhs = LLVMConstInt(LLVMInt32Type(), inst.getOperand(1).getImm(), 0);
+				} else if (id.OpInfo[1].OperandType == llvm::MCOI::OPERAND_MEMORY) {
+					ValRef pval = locals.find(getLocalName(inst, 1));
+					if (pval == locals.end()) {
+						llvm::outs() << "No such local " << getLocalName(inst, 1) << "\n";
+						break;
+					}
+
+					rhs = LLVMBuildLoad(llvmBuilder, pval->second, getRegName(inst, 0));
+				} else {
+					continue;
+				}
+
+				regs[getRegName(inst, 0)] = rhs;
 			}
 		}
 	}
@@ -206,7 +292,10 @@ static int analyzeSymbol(const llvm::object::SymbolRef& sym) {
 	std::deque<llvm::MCInst> block;
 
 	disassembleSymbol(sym, block);
-	analyzeStackReferences(block);	
+	translateBlock(block);
+	//analyzeStackReferences(block);
+
+	return 0;
 }
 
 // ----------------------------------------------------------------------------
@@ -256,29 +345,38 @@ int main(int argc, char** argv) {
 		return 1;
 	}
 
-	sti = target->createMCSubtargetInfo(targetName, "", "");
-	if (!sti) {
+	STI = target->createMCSubtargetInfo(targetName, "", "");
+	if (!STI) {
 		llvm::errs() << file << ": " << ": to get the subtarget info!\n";
 		return 1;
 	}
 
-	disasm = target->createMCDisassembler(*sti);
+	disasm = target->createMCDisassembler(*STI);
 	if (!disasm) {
 		llvm::errs() << file << ": " << ": to get the disassembler!\n";
 		return 1;
 	}
 
-	mii = target->createMCInstrInfo();
-    if (!mii) {
+	MII = target->createMCInstrInfo();
+    if (!MII) {
 		llvm::errs() << file << ": no instruction info for target\n";
 		return 1;
     }
 
-	mri = target->createMCRegInfo(targetName);
-    if (!mri) {
+	MRI = target->createMCRegInfo(targetName);
+    if (!MRI) {
 		llvm::errs() << file << ": no register info for target\n";
 		return 1;
     }
+
+
+	llvmBuilder = LLVMCreateBuilder();
+
+	LLVMModuleRef llvmModule = LLVMModuleCreateWithName("test");
+	LLVMTypeRef mainType = LLVMFunctionType(LLVMInt32Type(), NULL, 0, 0);
+	LLVMValueRef mainFn = LLVMAddFunction(llvmModule, "main", mainType);
+	LLVMBasicBlockRef blk = LLVMAppendBasicBlock(mainFn, "");
+	LLVMPositionBuilderAtEnd(llvmBuilder, blk);
 
 	for (llvm::object::section_iterator i = obj->begin_sections(), e = obj->end_sections();
 		 i != e; 
@@ -374,6 +472,11 @@ int main(int argc, char** argv) {
 			}
 		}
 	}
+
+	LLVMDumpModule(llvmModule);
+
+	LLVMDisposeModule(llvmModule);
+	LLVMDisposeBuilder(llvmBuilder);
 
 	return 0;
 }
