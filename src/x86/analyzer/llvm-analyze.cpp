@@ -284,18 +284,7 @@ struct Operand {
 	Size					size;
 
 	std::string  name;
-
-	union {
-		LLVMValueRef val;
-
-		struct {
-			LLVMValueRef base;
-			LLVMValueRef index;
-			LLVMValueRef scale;
-			LLVMValueRef disp;
-		};
-	};
-
+	LLVMValueRef val;
 
 	static LLVMTypeRef getIntType(Size size) {
 		switch (size) {
@@ -346,7 +335,7 @@ struct Operand {
 	void store(const Operand& op) {
 		switch (storage) {
 		case llvm::MCOI::OPERAND_MEMORY:
-			LLVMBuildStore(llvmBuilder, get(), op.get());
+			LLVMBuildStore(llvmBuilder, op.get(), getLocal(name));
 			break;
 
 		case llvm::MCOI::OPERAND_REGISTER:
@@ -396,6 +385,17 @@ static void parseOperands(const llvm::MCInst& inst, std::deque<Operand>& operand
 
 		switch (id.OpInfo[i].OperandType) {
 		case llvm::MCOI::OPERAND_UNKNOWN:
+			LLVMValueRef base, index, scale, disp;
+
+			base = regs[getRegName(inst.getOperand(i))];
+			scale = LLVMConstInt(LLVMInt64Type(), inst.getOperand(i + 1).getImm(), 0);
+			index = regs[getRegName(inst.getOperand(i + 2))];
+			disp = LLVMConstInt(LLVMInt64Type(), inst.getOperand(i + 3).getImm(), 0);
+
+			op.size = Operand::S64;
+			op.val = LLVMBuildAdd(llvmBuilder, base,
+											   LLVMBuildAdd(llvmBuilder, LLVMBuildMul(llvmBuilder, index, scale, ""),
+																		 disp, ""), "");
 			i += 5;
 			break;
 
@@ -428,6 +428,8 @@ static void parseOperands(const llvm::MCInst& inst, std::deque<Operand>& operand
 }
 
 static void translateBlock(std::deque<llvm::MCInst>& block) {
+	int cnt1 = 0;
+	int cnt2 = 0;
 
 	for (InstIter it = block.begin(); it != block.end(); ++it) {
 		llvm::MCInst& inst = *it;
@@ -438,11 +440,22 @@ static void translateBlock(std::deque<llvm::MCInst>& block) {
 		parseOperands(inst, ops);
 
 		if (iname.startswith("MOV")) {
+			cnt1++;
 			ops[0].store(ops[1]);
 		} else if (iname.startswith("IMUL")) {
+			cnt1++;
 			ops[0].store(Operand(LLVMBuildMul(llvmBuilder, ops[1].get(), ops[2].get(), "")));
+		} else if (iname.startswith("LEA64")) {
+			cnt1++;
+			ops[0].store(ops[1]);
+		} else {
+			printInst(inst);
 		}
+
+		cnt2++;
 	}
+
+	llvm::outs() << "Coverage " << cnt2 << "/" << cnt1 << "\n";
 }
 
 static int analyzeSymbol(const llvm::object::SymbolRef& sym) {
@@ -580,28 +593,6 @@ int main(int argc, char** argv) {
 				llvm::errs() << file << ": " << secName << ": failed to get the symbol name!\n";
 				return 1;
 			}
-
-			/*
-			uint64_t secSize, secBase, symAddr;
-
-			i->getAddress(secBase);
-			i->getSize(secSize);
-			isym->getAddress(symAddr);
-
-			
-			if (i->containsSymbol(*isym, res)) {
-				llvm::errs() << file << ": " << secName << ": " << symName << ": failed to check whether the symbol is in the section!\n";
-				return 1;
-			}
-
-			if (!res) {
-				continue;
-			}
-			
-			if (symAddr < secBase || symAddr >= secBase + secSize) {
-				continue;
-			}
-			*/
 
 			llvm::object::section_iterator i2 = llvm::object::section_iterator(llvm::object::SectionRef());
 			isym->getSection(i2);
