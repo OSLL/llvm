@@ -29,7 +29,10 @@
 #include <llvm/Support/ManagedStatic.h>
 #include <llvm/Support/Casting.h>
 
-#include <llvm-c/Core.h>
+#include <llvm/Module.h>
+#include <llvm/Function.h>
+#include <llvm/Constant.h>
+#include <llvm/Support/IRBuilder.h>
 
 // ----------------------------------------------------------------------------
 
@@ -43,6 +46,7 @@ struct LinearBlock {
 
 
 typedef std::deque<llvm::MCInst>::iterator InstIter;
+typedef llvm::IRBuilder<> LLVMBuilder;
 
 // ----------------------------------------------------------------------------
 
@@ -51,8 +55,8 @@ static llvm::MCDisassembler*	disasm;
 static llvm::MCRegisterInfo*	MRI;
 static llvm::MCInstrInfo*		MII;
 
-
-static LLVMBuilderRef			llvmBuilder;	
+static llvm::LLVMContext		llvmCtx;
+static LLVMBuilder*				llvmBuilder;
 
 // ----------------------------------------------------------------------------
 
@@ -187,7 +191,7 @@ static int disassembleSymbol(	const llvm::object::SymbolRef& sym,
 	return 0;
 }
 
-
+/*
 static void analyzeStackReferences(std::deque<llvm::MCInst>& block) {
 	for (InstIter it = block.begin(); it != block.end(); ++it) {
 		llvm::MCInst& inst = *it;
@@ -210,14 +214,35 @@ static void analyzeStackReferences(std::deque<llvm::MCInst>& block) {
 		}
 	}
 }
-
+*/
 
 // ----------------------------------------------------------------------------
 
-typedef std::map<std::string, LLVMValueRef>::const_iterator ValRef;
+/*
+static LLVMValueRef getLocal(const std::string& name) {
+	ValRef ref = locals.find(name);
+	if (ref != locals.end()) {
+		return ref->second;
+	} else {
+		LLVMValueRef res = LLVMBuildAlloca(llvmBuilder, LLVMInt32Type(), name.c_str());
+		locals[name] = res;
+		return res;
+	}
+}
 
-static std::map<std::string, LLVMValueRef> locals;
-static std::map<std::string, LLVMValueRef> regs;
+static LLVMValueRef getRegVal(const llvm::MCOperand& op) {
+	const char* regName = getRegName(op);
+
+	if (regName[0] == 'E') {
+		char reg64Name[8];
+
+		snprintf(reg64Name, sizeof(reg64Name), "R%s", regName + 1);
+		return LLVMBuildIntCast(llvmBuilder, regs[reg64Name], LLVMInt32Type(), "");
+	}
+
+	return regs[regName];
+}
+*/
 
 static std::string getLocalName(const llvm::MCInst& inst, unsigned iop) {
 	const llvm::MCOperand& op = inst.getOperand(iop);
@@ -229,17 +254,6 @@ static std::string getLocalName(const llvm::MCInst& inst, unsigned iop) {
 		return std::string(buf);
 	} else {
 		return std::string("UNK");
-	}
-}
-
-static LLVMValueRef getLocal(const std::string& name) {
-	ValRef ref = locals.find(name);
-	if (ref != locals.end()) {
-		return ref->second;
-	} else {
-		LLVMValueRef res = LLVMBuildAlloca(llvmBuilder, LLVMInt32Type(), name.c_str());
-		locals[name] = res;
-		return res;
 	}
 }
 
@@ -259,20 +273,51 @@ static std::string getReg64Name(const llvm::MCOperand& op) {
 	}
 }
 
-static LLVMValueRef getRegVal(const llvm::MCOperand& op) {
-	const char* regName = getRegName(op);
+// ----------------------------------------------------------------------------
 
-	if (regName[0] == 'E') {
-		char reg64Name[8];
-
-		snprintf(reg64Name, sizeof(reg64Name), "R%s", regName + 1);
-		return LLVMBuildIntCast(llvmBuilder, regs[reg64Name], LLVMInt32Type(), "");
+class Context {
+public:
+	llvm::Value* getLocal(const std::string& name, llvm::Type* type) {
+		ValRef ref = _locals.find(name);
+		if (ref != _locals.end()) {
+			return ref->second;
+		} else if (type) {
+			llvm::Value* res = llvmBuilder->CreateAlloca(type, NULL, name);
+			_locals[name] = res;
+			return res;
+		} else {
+			llvm::errs() << "No type specified!\n";
+			abort();
+		}
 	}
 
-	return regs[regName];
-}
+	llvm::Value* getReg(const std::string& name) {
+		ValRef it = _regs.find(name);
+		if (it == _regs.end()) {
+			llvm::errs() << "No value for the register " << name << ", defaulting to 0\n";
+			return llvm::Constant::getIntegerValue(llvm::Type::getInt64Ty(llvmCtx),
+												   llvm::APInt(64, 0));
+		}
 
-struct Operand {
+		return it->second;
+	}
+
+	void setReg(const std::string& name, llvm::Value* val) {
+		_regs[name] = val;
+	}
+
+private:
+	typedef std::map<std::string, llvm::Value*>::const_iterator ValRef;
+
+	std::map<std::string, llvm::Value*> _locals;
+	std::map<std::string, llvm::Value*> _regs;
+};
+
+
+// ----------------------------------------------------------------------------
+
+class Operand {
+public:
 	enum Size {
 		S8,
 		S16,
@@ -280,81 +325,150 @@ struct Operand {
 		S64
 	};
 
-	llvm::MCOI::OperandType storage;
-	Size					size;
+	typedef llvm::MCOI::OperandType Storage;
 
-	std::string  name;
-	LLVMValueRef val;
 
-	static LLVMTypeRef getIntType(Size size) {
-		switch (size) {
-		case S32:
-			return LLVMInt32Type();
+	Operand() { _ctx = NULL; }
 
-		case S64:
-			return LLVMInt64Type();
+	Operand(Context* ctx) { 
+		_ctx = ctx;
+	}
+
+	Operand(Context* ctx, Storage storage, Size size, const std::string& name) {
+		_ctx = ctx;
+		_size = size;
+		_name = name;
+		_storage = storage;
+	}
+
+	Operand(Context* ctx, llvm::Value* val) {
+		_ctx = ctx;
+		_val = val;
+
+		llvm::Type* ty = val->getType();
+		if (!ty->isIntegerTy()) {
+			llvm::errs() << "Not an integer type!\n";
+			abort();
+		}
+
+		switch (ty->getIntegerBitWidth()) {
+		case 32:
+			_size = S32;
+			break;
+
+		case 64:
+			_size = S64;
+			break;
 
 		default:
+			llvm::outs() << "Unsupported integer size!\n";
 			abort();
 		}
 	}
 
-	Operand() { }
-
-	Operand(LLVMValueRef vr, Size sz = S64) {
-		val = vr;
-		size = sz;
-	}
-	
-
-	LLVMValueRef get() const {
-		switch (storage) {
-		case llvm::MCOI::OPERAND_MEMORY:
-			return LLVMBuildLoad(llvmBuilder, getLocal(name), "");
-
-		case llvm::MCOI::OPERAND_REGISTER:
-			if (size == S64) {
-				return regs[name];
-			} else {
-				return LLVMBuildIntCast(llvmBuilder, regs[name], getIntType(size), "");
-			}
-
-		default:
-			return val;
-		}
-	}
 
 	std::string adviceName() const {
-		if (storage == llvm::MCOI::OPERAND_REGISTER) {
-			return name;
+		if (_storage == llvm::MCOI::OPERAND_REGISTER) {
+			return _name;
 		}
 
 		return std::string();
 	}
 
-	void store(const Operand& op) {
-		switch (storage) {
+
+	llvm::Value* get(llvm::Type* ty = NULL) const {
+		llvm::Value* res;
+
+		switch (_storage) {
 		case llvm::MCOI::OPERAND_MEMORY:
-			LLVMBuildStore(llvmBuilder, op.get(), getLocal(name));
+			res = llvmBuilder->CreateLoad(_ctx->getLocal(_name, NULL));
 			break;
 
 		case llvm::MCOI::OPERAND_REGISTER:
-			LLVMValueRef rhs;
-
-			if (op.size != S64) {
-				rhs = LLVMBuildIntCast(llvmBuilder, op.get(), LLVMInt64Type(), "");
-			} else {
-				rhs = op.get();
+			res = _ctx->getReg(_name);
+			if (_size != S64) {
+				res = llvmBuilder->CreateIntCast(res, getIntType(_size), true);
 			}
-
-			regs[name] = rhs;
 			break;
 
 		default:
-			llvm::outs() << "storage is " << storage << "\n";
+			res = _val;
+		}
+
+		return cast(res, ty);
+	}
+
+	void store(const Operand& op) {
+		if (_ctx != op._ctx) {
+			llvm::errs() << "Invalid context!\n";
+			abort();
+		}
+
+		switch (_storage) {
+		case llvm::MCOI::OPERAND_MEMORY:
+			llvm::Type *ty;
+
+			ty  = getIntType(_size);
+			llvmBuilder->CreateStore(op.get(ty), _ctx->getLocal(_name, ty));
+			break;
+
+		case llvm::MCOI::OPERAND_REGISTER:
+			llvm::Value* rhs;
+
+			rhs = op.get();
+			if (op._size != S64) {
+				rhs = llvmBuilder->CreateIntCast(rhs, getIntType(S64), true);
+			}
+
+			_ctx->setReg(_name, rhs);
+			break;
+
+		default:
+			llvm::outs() << "Don't know what to do; storage is " << _storage << "\n";
 			abort();
 		}
 	}
+
+
+	static llvm::Type* superType(Operand& op1, Operand& op2) {
+		if (op1._size > op2._size) {
+			return getIntType(op1._size);
+		}
+
+		return getIntType(op2._size);
+	}
+
+
+private:
+	static llvm::Value* cast(llvm::Value* val, llvm::Type* ty) {
+		if (ty && val->getType()->getIntegerBitWidth() != ty->getIntegerBitWidth()) {
+			return llvmBuilder->CreateIntCast(val, ty, true);
+		}
+
+		return val;
+	}
+
+
+	static llvm::Type* getIntType(Size size) {
+		switch (size) {
+		case S32:
+			return llvm::Type::getInt32Ty(llvmCtx);
+
+		case S64:
+			return llvm::Type::getInt64Ty(llvmCtx);
+
+		default:
+			abort();
+		}
+	}
+
+private:
+	Context*		_ctx;
+
+	Storage			_storage;
+	Size			_size;
+	std::string		_name;
+	llvm::Value*	_val;
 };
 
 
@@ -374,83 +488,119 @@ static Operand::Size getRegSize(const llvm::MCOperand& op) {
 	return Operand::S16;
 }
 
-static void parseOperands(const llvm::MCInst& inst, std::deque<Operand>& operands) {
-	const llvm::MCInstrDesc& id = MII->get(inst.getOpcode());
 
-	for (unsigned i = 0; i < inst.getNumOperands(); ) {
-		Operand op;
-		const llvm::MCOperand& cop = inst.getOperand(i);
+class OperandParser {
+public:
+	OperandParser(Context* context, const llvm::MCInst& inst) {
+		_ctx = context;
+		const llvm::MCInstrDesc& id = MII->get(inst.getOpcode());
 
-		op.storage = (llvm::MCOI::OperandType)id.OpInfo[i].OperandType;
+		for (unsigned i = 0; i < inst.getNumOperands(); ) {
+			Operand op;
+			const llvm::MCOperand& cop = inst.getOperand(i);
+			Operand::Storage storage = (Operand::Storage)id.OpInfo[i].OperandType;
 
-		switch (id.OpInfo[i].OperandType) {
-		case llvm::MCOI::OPERAND_UNKNOWN:
-			LLVMValueRef base, index, scale, disp;
+			switch (id.OpInfo[i].OperandType) {
+			case llvm::MCOI::OPERAND_UNKNOWN:
+				llvm::Value *base, *index, *scale, *disp;
 
-			base = regs[getRegName(inst.getOperand(i))];
-			scale = LLVMConstInt(LLVMInt64Type(), inst.getOperand(i + 1).getImm(), 0);
-			index = regs[getRegName(inst.getOperand(i + 2))];
-			disp = LLVMConstInt(LLVMInt64Type(), inst.getOperand(i + 3).getImm(), 0);
+				base  = getReg(inst.getOperand(i));
+				scale = getImm(inst.getOperand(i + 1));
+				index = getReg(inst.getOperand(i + 2));
+				disp  = getImm(inst.getOperand(i + 3));
 
-			op.size = Operand::S64;
-			op.val = LLVMBuildAdd(llvmBuilder, base,
-											   LLVMBuildAdd(llvmBuilder, LLVMBuildMul(llvmBuilder, index, scale, ""),
-																		 disp, ""), "");
-			i += 5;
-			break;
+				op = Operand(
+							 _ctx,
+							 llvmBuilder->CreateAdd(base,
+													llvmBuilder->CreateAdd(llvmBuilder->CreateMul(index, scale),
+																		   disp))
+							);
+				i += 5;
+				break;
 
-		case llvm::MCOI::OPERAND_MEMORY:
-			op.name = getLocalName(inst, i);
-			op.size = Operand::S32;
-			i += 5;
-			break;
+			case llvm::MCOI::OPERAND_MEMORY:
+				op = Operand(_ctx, storage, Operand::S32, getLocalName(inst, i));
+				i += 5;
+				break;
 
-		case llvm::MCOI::OPERAND_REGISTER:
-			op.name = getReg64Name(cop);
-			op.size = getRegSize(cop);
-			i++;
-			break;
+			case llvm::MCOI::OPERAND_REGISTER:
+				op = Operand(_ctx, storage, getRegSize(cop), getReg64Name(cop));
+				i++;
+				break;
 
-		case llvm::MCOI::OPERAND_IMMEDIATE:
-			op.size = Operand::S32;
-			op.val = LLVMConstInt(LLVMInt32Type(), cop.getImm(), 0);
-			i++;
-			break;
+			case llvm::MCOI::OPERAND_IMMEDIATE:
+				op = Operand(_ctx, getImm(cop));
+				i++;
+				break;
 
-		default:
-			llvm::outs() << "Storage is " << op.storage << "\n";
-			printInst(inst);
+			default:
+				llvm::errs() << "Storage is " << storage << "\n";
+				printInst(inst);
+				abort();
+			}
+
+			_operands.push_back(op);
+		}
+	}
+
+
+	Operand& operator[](unsigned int i) {
+		return _operands[i];
+	}
+
+private:
+	llvm::Value* getImm(const llvm::MCOperand& op) {
+		if (!op.isImm()) {
+			llvm::errs() << "The operand isn't an immediate!\n";
 			abort();
 		}
 
-		operands.push_back(op);
+		return llvm::Constant::getIntegerValue(llvm::Type::getInt64Ty(llvmCtx), 
+											   llvm::APInt(64, op.getImm()));
 	}
-}
+
+	llvm::Value* getReg(const llvm::MCOperand& op) {
+		if (!op.isReg()) {
+			llvm::errs() << "The operand isn't a register!\n";
+			abort();
+		}
+
+		return _ctx->getReg(getReg64Name(op));
+	}
+
+
+	std::vector<Operand> _operands;
+	Context*			 _ctx;
+};
+
 
 static void translateBlock(std::deque<llvm::MCInst>& block) {
 	int cnt1 = 0;
 	int cnt2 = 0;
+	Context ctx;
 
 	for (InstIter it = block.begin(); it != block.end(); ++it) {
 		llvm::MCInst& inst = *it;
 		const llvm::MCInstrDesc& id = MII->get(inst.getOpcode());
 		llvm::StringRef iname = MII->getName(inst.getOpcode());
-		std::deque<Operand> ops;
+		OperandParser ops(&ctx, inst);
 
-		parseOperands(inst, ops);
+		//printInst(inst);
 
 		if (iname.startswith("MOV")) {
 			cnt1++;
 			ops[0].store(ops[1]);
 		} else if (iname.startswith("IMUL")) {
 			cnt1++;
-			ops[0].store(Operand(LLVMBuildMul(llvmBuilder, ops[1].get(), ops[2].get(), "")));
+
+			llvm::Type* ty = Operand::superType(ops[1], ops[2]);
+			ops[0].store(Operand(&ctx, llvmBuilder->CreateMul(ops[1].get(ty), ops[2].get(ty))));
 		} else if (iname.startswith("LEA64")) {
 			cnt1++;
 			ops[0].store(ops[1]);
-		} else {
+		} /*else {
 			printInst(inst);
-		}
+		}*/
 
 		cnt2++;
 	}
@@ -540,13 +690,15 @@ int main(int argc, char** argv) {
     }
 
 
-	llvmBuilder = LLVMCreateBuilder();
+	llvm::Module* module = new llvm::Module("test", llvmCtx);
+	llvm::Function* mainFn = llvm::Function::Create(llvm::FunctionType::get(llvm::Type::getInt32Ty(llvmCtx), false),
+													llvm::GlobalValue::ExternalLinkage,
+													"main",
+													module);
 
-	LLVMModuleRef llvmModule = LLVMModuleCreateWithName("test");
-	LLVMTypeRef mainType = LLVMFunctionType(LLVMInt32Type(), NULL, 0, 0);
-	LLVMValueRef mainFn = LLVMAddFunction(llvmModule, "main", mainType);
-	LLVMBasicBlockRef blk = LLVMAppendBasicBlock(mainFn, "");
-	LLVMPositionBuilderAtEnd(llvmBuilder, blk);
+
+	llvm::BasicBlock* blk = llvm::BasicBlock::Create(llvmCtx, "", mainFn);
+	llvmBuilder = new llvm::IRBuilder<>(blk, llvm::ConstantFolder());
 
 	for (llvm::object::section_iterator i = obj->begin_sections(), e = obj->end_sections();
 		 i != e; 
@@ -621,10 +773,10 @@ int main(int argc, char** argv) {
 		}
 	}
 
-	LLVMDumpModule(llvmModule);
+	llvmBuilder->CreateRet(llvm::Constant::getIntegerValue(llvm::Type::getInt32Ty(llvmCtx),
+														   llvm::APInt(32, 0)));
 
-	LLVMDisposeModule(llvmModule);
-	LLVMDisposeBuilder(llvmBuilder);
+	llvm::outs() << *module;
 
 	return 0;
 }
