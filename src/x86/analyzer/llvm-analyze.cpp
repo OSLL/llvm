@@ -8,6 +8,8 @@
 #include <deque>
 #include <set>
 #include <map>
+#include <vector>
+#include <algorithm>
 
 #include <llvm/Object/ObjectFile.h>
 #include <llvm/Support/MemoryObject.h>
@@ -48,6 +50,8 @@ struct LinearBlock {
 typedef std::deque<llvm::MCInst>::iterator InstIter;
 typedef llvm::IRBuilder<> LLVMBuilder;
 
+typedef std::deque<llvm::MCInst> InstList;
+
 // ----------------------------------------------------------------------------
 
 static llvm::MCSubtargetInfo*	STI;
@@ -57,7 +61,8 @@ static llvm::MCInstrInfo*		MII;
 
 static llvm::LLVMContext		llvmCtx;
 static LLVMBuilder*				llvmBuilder;
-
+static llvm::Module*			module;
+ 
 // ----------------------------------------------------------------------------
 
 class StringRefMemoryObject : public llvm::MemoryObject {
@@ -268,6 +273,8 @@ static std::string getReg64Name(const llvm::MCOperand& op) {
 		char reg64Name[8];
 		snprintf(reg64Name, sizeof(reg64Name), "R%s", regName + 1);
 		return reg64Name;
+	} else if (regName[strlen(regName) - 1] == 'D') {
+		return std::string(regName, strlen(regName) - 1);
 	} else {
 		return regName;
 	}
@@ -608,11 +615,77 @@ static void translateBlock(std::deque<llvm::MCInst>& block) {
 	llvm::outs() << "Coverage " << cnt2 << "/" << cnt1 << "\n";
 }
 
+
+static int analyzeParameterReferences(InstList& block) {
+	int args = 0;
+
+	std::map<std::string, int> potArgs;
+	potArgs["RDI"] = 1;
+	potArgs["RSI"] = 2;
+	potArgs["RDX"] = 3;
+	potArgs["RCX"] = 4;
+	potArgs["R8"]  = 5;
+	potArgs["R9"]  = 6;
+
+	for (auto inst = block.begin(); inst != block.end(); ++inst) {
+		for (auto op = inst->begin(); op != inst->end(); ++op) {
+			if (op->isReg()) {
+				// The operand is a register
+
+				std::string reg = getReg64Name(*op);
+
+				auto it = potArgs.find(reg);
+				if (it != potArgs.end()) {
+					// The register may contain a function argument
+
+					if (op != inst->begin()) {
+						// The register isn't the first operand --- a function argument is referenced
+
+						if (args < it->second) {
+							args = it->second;
+						}
+					} else {
+						// The register is the first operand --- this register doesn't contain an argument anymore
+
+						const llvm::MCInstrDesc& id = MII->get(inst->getOpcode());
+						if (id.OpInfo[0].OperandType == llvm::MCOI::OPERAND_REGISTER) {
+							potArgs.erase(it);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return args;
+}
+
+
 static int analyzeSymbol(const llvm::object::SymbolRef& sym) {
 	std::deque<llvm::MCInst> block;
+	llvm::StringRef fnName;
+	int argNum;
+
+	sym.getName(fnName);
 
 	disassembleSymbol(sym, block);
-	translateBlock(block);
+	argNum = analyzeParameterReferences(block);
+
+	std::vector<llvm::Type*> argTypes(argNum);
+	std::fill(argTypes.begin(), argTypes.end(), llvm::Type::getInt64Ty(llvmCtx));
+
+	llvm::Function* fn = llvm::Function::Create(llvm::FunctionType::get(llvm::Type::getInt64Ty(llvmCtx),
+																		llvm::ArrayRef<llvm::Type*>(&argTypes.front(), &argTypes.back() + 1),
+																		false),
+												llvm::GlobalValue::ExternalLinkage,
+												fnName,
+												module);
+
+
+	llvm::BasicBlock* blk = llvm::BasicBlock::Create(llvmCtx, "", fn);
+	llvmBuilder = new llvm::IRBuilder<>(blk, llvm::ConstantFolder());
+
+	//translateBlock(block);
 	//analyzeStackReferences(block);
 
 	return 0;
@@ -690,15 +763,7 @@ int main(int argc, char** argv) {
     }
 
 
-	llvm::Module* module = new llvm::Module("test", llvmCtx);
-	llvm::Function* mainFn = llvm::Function::Create(llvm::FunctionType::get(llvm::Type::getInt32Ty(llvmCtx), false),
-													llvm::GlobalValue::ExternalLinkage,
-													"main",
-													module);
-
-
-	llvm::BasicBlock* blk = llvm::BasicBlock::Create(llvmCtx, "", mainFn);
-	llvmBuilder = new llvm::IRBuilder<>(blk, llvm::ConstantFolder());
+	module = new llvm::Module("test", llvmCtx);
 
 	for (llvm::object::section_iterator i = obj->begin_sections(), e = obj->end_sections();
 		 i != e; 
@@ -773,8 +838,8 @@ int main(int argc, char** argv) {
 		}
 	}
 
-	llvmBuilder->CreateRet(llvm::Constant::getIntegerValue(llvm::Type::getInt32Ty(llvmCtx),
-														   llvm::APInt(32, 0)));
+	llvmBuilder->CreateRet(llvm::Constant::getIntegerValue(llvm::Type::getInt64Ty(llvmCtx),
+														   llvm::APInt(64, 0)));
 
 	llvm::outs() << *module;
 

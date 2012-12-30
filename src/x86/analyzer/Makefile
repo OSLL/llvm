@@ -7,7 +7,7 @@ LDFLAGS := $(shell $(LLVMCFG) --ldflags)
 all: llvm-disasm llvm-analyze
 
 %: %.cpp
-	g++ -pthread -ggdb3 -o $@ $(CFLAGS) $< $(LIBS) $(LDFLAGS) 
+	g++ -pthread -std=c++0x -ggdb3 -o $@ $(CFLAGS) $< $(LIBS) $(LDFLAGS)
 
 clean:
 	rm llvm-disasm
