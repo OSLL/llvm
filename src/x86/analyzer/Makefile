@@ -10,4 +10,4 @@ all: llvm-disasm llvm-analyze
 	g++ -pthread -std=c++0x -ggdb3 -o $@ $(CFLAGS) $< $(LIBS) $(LDFLAGS)
 
 clean:
-	rm llvm-disasm
+	rm llvm-disasm llvm-analyze
