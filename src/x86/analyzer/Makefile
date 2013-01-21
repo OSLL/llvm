@@ -9,5 +9,10 @@ all: llvm-analyze
 %: %.cpp
 	g++ -pthread -std=c++0x -ggdb3 -o $@ $(CFLAGS) $< $(LIBS) $(LDFLAGS)
 
+test: llvm-analyze
+	make -C ../../../test
+
 clean:
 	rm llvm-analyze
+
+.PHONY: test clean
