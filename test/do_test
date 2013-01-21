@@ -1,0 +1,11 @@
+#!/bin/sh
+
+REFERENCE=$1
+TEST=$2
+
+echo "Executing the reference program..."
+./$REFERENCE
+
+echo
+echo "Executung the reconstructed program..."
+./$TEST
