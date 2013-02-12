@@ -106,6 +106,8 @@ static void vex_init_arg_common(VexTranslateArgs *pva)
 // ----------------------------------------------------------------------------
 
 struct CodeBlock {
+#define _ctx ctx()
+
 public:
 	CodeBlock(const llvm::object::SymbolRef &sym, llvm::Module *module)
 	{
@@ -145,13 +147,12 @@ private:
 	void createBuilder()
 	{
 		int argNum = 3; /* FIXME use proper value when the argument analysis is done */
-		llvm::LLVMContext &ctx = _module->getContext();
 
 		std::vector<llvm::Type*> argTypes(argNum);
-		std::fill(argTypes.begin(), argTypes.end(), llvm::Type::getInt64Ty(ctx));
+		std::fill(argTypes.begin(), argTypes.end(), llvm::Type::getInt64Ty(_ctx));
 
 		llvm::Function* fn = llvm::Function::Create(
-			llvm::FunctionType::get(llvm::Type::getInt64Ty(ctx),
+			llvm::FunctionType::get(llvm::Type::getInt64Ty(_ctx),
 									llvm::ArrayRef<llvm::Type*>(&argTypes.front(), &argTypes.back() + 1),
 									false),
 			llvm::GlobalValue::ExternalLinkage,
@@ -162,6 +163,9 @@ private:
 		_b = new llvm::IRBuilder<>(blk, llvm::ConstantFolder());
 	}
 
+	llvm::LLVMContext &ctx() { return _module->getContext(); }
+
+
 public:
 	llvm::StringRef _contents;
 	const char *_symCode;
@@ -169,6 +173,8 @@ public:
 
 	llvm::Module *_module;
 	LLVMBuilder *_b;
+
+#undef _ctx
 };
 
 static UInt need_selfcheck_cb_stub(void *opaque, VexGuestExtents *ext)
