@@ -44,7 +44,6 @@ static llvm::MCRegisterInfo*	MRI;
 static llvm::MCInstrInfo*		MII;
 
 static llvm::LLVMContext		llvmCtx;
-static LLVMBuilder*				llvmBuilder;
 static llvm::Module*			module;
  
 // ----------------------------------------------------------------------------
@@ -108,7 +107,7 @@ static void vex_init_arg_common(VexTranslateArgs *pva)
 
 struct CodeBlock {
 public:
-	CodeBlock(const llvm::object::SymbolRef& sym)
+	CodeBlock(const llvm::object::SymbolRef &sym, llvm::Module *module)
 	{
 		auto isec = llvm::object::section_iterator(llvm::object::SectionRef());
 
@@ -118,6 +117,9 @@ public:
 		sym.getSize(_symSize);
 		isec->getContents(_contents);
 		_symCode = _contents.data();
+		_module = module;
+
+		createBuilder();
 	}
 
 	static Bool vex_cb(void *_self, Addr64 addr)
@@ -139,10 +141,34 @@ public:
 	}
 
 
+private:
+	void createBuilder()
+	{
+		int argNum = 3; /* FIXME use proper value when the argument analysis is done */
+		llvm::LLVMContext &ctx = _module->getContext();
 
+		std::vector<llvm::Type*> argTypes(argNum);
+		std::fill(argTypes.begin(), argTypes.end(), llvm::Type::getInt64Ty(ctx));
+
+		llvm::Function* fn = llvm::Function::Create(
+			llvm::FunctionType::get(llvm::Type::getInt64Ty(ctx),
+									llvm::ArrayRef<llvm::Type*>(&argTypes.front(), &argTypes.back() + 1),
+									false),
+			llvm::GlobalValue::ExternalLinkage,
+			"FIXME",
+			_module);
+
+		llvm::BasicBlock *blk = llvm::BasicBlock::Create(ctx, "", fn);
+		_b = new llvm::IRBuilder<>(blk, llvm::ConstantFolder());
+	}
+
+public:
 	llvm::StringRef _contents;
 	const char *_symCode;
 	uint64_t _secBase, _symAddr, _symSize;
+
+	llvm::Module *_module;
+	LLVMBuilder *_b;
 };
 
 static UInt need_selfcheck_cb_stub(void *opaque, VexGuestExtents *ext)
@@ -151,10 +177,10 @@ static UInt need_selfcheck_cb_stub(void *opaque, VexGuestExtents *ext)
 }
 
 
-static int asmToVEX(const llvm::object::SymbolRef& sym)
+static int asmToVEX(const llvm::object::SymbolRef &sym, llvm::Module *module)
 {
 	VexTranslateArgs va;
-	CodeBlock bc(sym);
+	CodeBlock bc(sym, module);
 	UChar *vexCode = new UChar[4096];
 	Int vexCodeUsed;
 	VexGuestExtents vge[128];
@@ -178,16 +204,14 @@ static int asmToVEX(const llvm::object::SymbolRef& sym)
 	delete vexCode;
 }
 
-static int analyzeSymbol(const llvm::object::SymbolRef& sym)
+static int analyzeSymbol(const llvm::object::SymbolRef &sym, llvm::Module *module)
 {
 	llvm::StringRef symName;
-
 	sym.getName(symName);
-
 	llvm::outs() << "Translating the symbol " << symName << "\n";
 
 
-	asmToVEX(sym);
+	asmToVEX(sym, module);
 
 	return 0;
 }
@@ -329,7 +353,7 @@ int main(int argc, char** argv)
 		for (std::set<llvm::object::SymbolRef>::const_iterator	isym = symbols.begin();
 																isym != symbols.end();
 																++isym) {
-			if (analyzeSymbol(*isym)) {
+			if (analyzeSymbol(*isym, module)) {
 				return 1;
 			}
 		}
