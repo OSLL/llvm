@@ -132,6 +132,19 @@ public:
 	}
 
 
+	static
+	IRSB *vex_instrument_cb(void *_self,
+							IRSB *irsb,
+							VexGuestLayout *guest_layouts,
+							VexGuestExtents *guest_extents,
+							VexArchInfo *archinfo,
+							IRType gWordTy, IRType hWordTy)
+	{
+		return irsb;
+	}
+
+
+
 	llvm::StringRef _contents;
 	const char *_symCode;
 	uint64_t _secBase, _symAddr, _symSize;
@@ -141,6 +154,7 @@ static UInt need_selfcheck_cb_stub(void *opaque, VexGuestExtents *ext)
 {
 	return 0;
 }
+
 
 static int asmToVEX(const llvm::object::SymbolRef& sym)
 {
@@ -161,6 +175,8 @@ static int asmToVEX(const llvm::object::SymbolRef& sym)
 	va.host_bytes_size = 4096;
 	va.host_bytes_used = &vexCodeUsed;
 	va.needs_self_check = need_selfcheck_cb_stub;
+
+	va.instrument1 = CodeBlock::vex_instrument_cb;
 
 	LibVEX_Translate(&va);
 
