@@ -163,6 +163,28 @@ private:
 		_b = new llvm::IRBuilder<>(blk, llvm::ConstantFolder());
 	}
 
+
+	llvm::Type *intType(int size)
+	{
+		switch (size) {
+		case 8:
+			return llvm::Type::getInt8Ty(_ctx);
+
+		case 64:
+			return llvm::Type::getInt64Ty(_ctx);
+
+		default:
+			abort();
+		}
+	}
+
+
+	llvm::Value *constant(int size, uint64_t val, bool isSigned = false)
+	{
+		return llvm::Constant::getIntegerValue(intType(size), llvm::APInt(size, val, isSigned));
+	}
+
+
 	llvm::LLVMContext &ctx() { return _module->getContext(); }
 
 
