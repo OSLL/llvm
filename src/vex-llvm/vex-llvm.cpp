@@ -124,6 +124,7 @@ public:
 		createBuilder();
 	}
 
+
 	static Bool vex_cb(void *_self, Addr64 addr)
 	{
 		CodeBlock *self = (CodeBlock*)_self;
@@ -139,6 +140,9 @@ public:
 							VexArchInfo *archinfo,
 							IRType gWordTy, IRType hWordTy)
 	{
+		CodeBlock *self = (CodeBlock*)_self;
+		self->generateLLVM(irsb);
+
 		return irsb;
 	}
 
@@ -159,8 +163,61 @@ private:
 			"FIXME",
 			_module);
 
-		llvm::BasicBlock *blk = llvm::BasicBlock::Create(ctx, "", fn);
+		llvm::BasicBlock *blk = llvm::BasicBlock::Create(_ctx, "", fn);
 		_b = new llvm::IRBuilder<>(blk, llvm::ConstantFolder());
+
+		_regs = _b->CreateAlloca(
+			intType(8),
+			constant(64, 216));
+	}
+
+
+	void generateLLVM(IRSB *irsb)
+	{
+		for (Int i = 0; i < irsb->stmts_used; ++i) {
+			IRStmt *stmt = irsb->stmts[i];
+
+			switch (stmt->tag) {
+			case Ist_WrTmp:
+				_tmps[stmt->Ist.WrTmp.tmp] = visit(stmt->Ist.WrTmp.data);
+				break;
+
+			case Ist_IMark:
+			case Ist_NoOp:
+				break;
+
+			default:
+				llvm::errs() << "Unknown VEX statement tag " << stmt->tag << "\n";
+				abort();
+			}
+		}
+	}
+
+
+	llvm::Value *visit(IRExpr *expr)
+	{
+		switch (expr->tag) {
+		case Iex_Get:
+			break;
+
+		case Iex_Const:
+			IRConst *con;
+
+			con = expr->Iex.Const.con;
+			switch (con->tag) {
+			case Ico_U64:
+				return constant(64, con->Ico.U64);
+
+			default:
+				llvm::errs() << "Unknown VEX IR constant type " << con->tag << "\n";
+				abort();
+			}
+			break;
+
+		default:
+			llvm::errs() << "Unknown VEX IR expression tag " << expr->tag << "\n";
+			abort();
+		}
 	}
 
 
@@ -193,8 +250,12 @@ public:
 	const char *_symCode;
 	uint64_t _secBase, _symAddr, _symSize;
 
+private:
 	llvm::Module *_module;
 	LLVMBuilder *_b;
+	llvm::Value *_regs;
+
+	std::map<IRTemp, llvm::Value*> _tmps;
 
 #undef _ctx
 };
