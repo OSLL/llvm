@@ -30,11 +30,6 @@
 #include <llvm/Support/IRBuilder.h>
 
 extern "C" {
-//#define VGO_linux
-//#define VGA_amd64
-
-//#include <pub_tool_basics.h>
-//#include <pub_tool_tooliface.h>
 #include <libvex.h>
 }
 
