@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 extern int mat_mult(int*, int*, int*);
 
@@ -34,6 +35,7 @@ int main(int argc, char** argv) {
 		B[i] = rand() % 100;
 	}
 
+	memset(C, -1, sizeof(C));
 	mat_mult(A, B, C);
 
 	printf("A is\n");
