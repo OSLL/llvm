@@ -10,8 +10,6 @@ REFS  := $(patsubst %,ref_%,$(CASES))
 TESTS := $(patsubst %,test_%,$(CASES))
 DOITS := $(patsubst %,do_%,$(CASES))
 
-ANALYZER := ../src/x86/analyzer/llvm-analyze
-
 
 .SECONDARY:
 
