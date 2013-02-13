@@ -84,6 +84,7 @@ static void vex_init_arg_common(VexTranslateArgs *pva)
 	pva->archinfo_host.hwcache_info.icaches_maintain_coherence = 0;
 
 	LibVEX_default_VexAbiInfo(&pva->abiinfo_both);
+	pva->abiinfo_both.guest_stack_redzone_size = 128; /* XXX LibVEX aborts on AMD64 guest if it's not so */
 
 
 	pva->host_bytes_used = NULL;
@@ -117,6 +118,7 @@ public:
 		isec->getAddress(_secBase);
 		sym.getAddress(_symAddr);
 		sym.getSize(_symSize);
+		sym.getName(_fname);
 		isec->getContents(_contents);
 		_symCode = _contents.data();
 		_module = module;
@@ -147,6 +149,12 @@ public:
 	}
 
 
+	void finalize()
+	{
+		_b->CreateRet(_b->CreateLoad(getRegPtr(16, intType(64))));
+	}
+
+
 private:
 	void createBuilder()
 	{
@@ -160,7 +168,7 @@ private:
 									llvm::ArrayRef<llvm::Type*>(&argTypes.front(), &argTypes.back() + 1),
 									false),
 			llvm::GlobalValue::ExternalLinkage,
-			"FIXME",
+			_fname,
 			_module);
 
 		llvm::BasicBlock *blk = llvm::BasicBlock::Create(_ctx, "", fn);
@@ -169,6 +177,15 @@ private:
 		_regs = _b->CreateAlloca(
 			intType(8),
 			constant(64, 216));
+
+		_regsp = _b->CreatePtrToInt(_regs, intType(64));
+
+
+		/* FIXME use proper initialization when the argument analysis is done */
+		auto farg = fn->arg_begin();
+		_b->CreateStore(&*(farg++), getRegPtr(72, intType(64)));
+		_b->CreateStore(&*(farg++), getRegPtr(64, intType(64)));
+		_b->CreateStore(&*(farg++), getRegPtr(32, intType(64)));
 	}
 
 
@@ -182,8 +199,28 @@ private:
 				_tmps[stmt->Ist.WrTmp.tmp] = visit(stmt->Ist.WrTmp.data);
 				break;
 
+			case Ist_Put:
+				llvm::Value *res;
+
+				res = visit(stmt->Ist.Put.data);
+				_b->CreateStore(
+						res,
+						getRegPtr(stmt->Ist.Put.offset, res->getType()));
+				break;
+
+			case Ist_Store:
+				llvm::Value *data, *p;
+
+				data = visit(stmt->Ist.Store.data);
+				p = visit(stmt->Ist.Store.addr);
+				_b->CreateStore(
+							data,
+							_b->CreateIntToPtr(p, ptr(data->getType())));
+				break;
+
 			case Ist_IMark:
 			case Ist_NoOp:
+			case Ist_AbiHint:	/* Not used for now */
 				break;
 
 			default:
@@ -197,8 +234,63 @@ private:
 	llvm::Value *visit(IRExpr *expr)
 	{
 		switch (expr->tag) {
-		case Iex_Get:
+		case Iex_Binop:
+			switch (expr->Iex.Binop.op) {
+			case Iop_Add64:
+			case Iop_Add32:
+				return _b->CreateAdd(
+							visit(expr->Iex.Binop.arg1),
+							visit(expr->Iex.Binop.arg2));
+
+			case Iop_Sub64:
+				return _b->CreateSub(
+							visit(expr->Iex.Binop.arg1),
+							visit(expr->Iex.Binop.arg2));
+
+			case Iop_Mul32:
+				return _b->CreateMul(
+							visit(expr->Iex.Binop.arg1),
+							visit(expr->Iex.Binop.arg2));
+
+			default:
+				llvm::errs() << "Unknown type of a binop " << expr->Iex.Binop.op << "\n";
+				abort();
+			}
+
 			break;
+
+		case Iex_Unop:
+			switch (expr->Iex.Unop.op) {
+			case Iop_32Uto64:
+				return _b->CreateIntCast(
+							visit(expr->Iex.Unop.arg),
+							intType(64), false);
+
+			case Iop_64to32:
+				return _b->CreateIntCast(
+							visit(expr->Iex.Unop.arg),
+							intType(32), false);
+
+			default:
+				llvm::errs() << "Unknown type of unop " << expr->Iex.Unop.op << "\n";
+				abort();
+			}
+			break;
+
+		case Iex_Get:
+			return _b->CreateLoad(
+						getRegPtr(
+							expr->Iex.Get.offset,
+							llvmType(expr->Iex.Get.ty)));
+
+		case Iex_RdTmp:
+			return _tmps[expr->Iex.RdTmp.tmp];
+
+		case Iex_Load:
+			return _b->CreateLoad(
+							_b->CreateIntToPtr(
+								visit(expr->Iex.Load.addr),
+								ptr(llvmType(expr->Iex.Load.ty))));
 
 		case Iex_Const:
 			IRConst *con;
@@ -227,6 +319,12 @@ private:
 		case 8:
 			return llvm::Type::getInt8Ty(_ctx);
 
+		case 16:
+			return llvm::Type::getInt16Ty(_ctx);
+
+		case 32:
+			return llvm::Type::getInt32Ty(_ctx);
+
 		case 64:
 			return llvm::Type::getInt64Ty(_ctx);
 
@@ -236,9 +334,45 @@ private:
 	}
 
 
+	llvm::Type *llvmType(IRType ty)
+	{
+		switch (ty) {
+		case Ity_I8:
+			return intType(8);
+
+		case Ity_I16:
+			return intType(16);
+
+		case Ity_I32:
+			return intType(32);
+
+		case Ity_I64:
+			return intType(64);
+
+		default:
+			llvm::errs() << "Unknown type " << ty << "\n";
+			abort();
+		}
+	}
+
+
 	llvm::Value *constant(int size, uint64_t val, bool isSigned = false)
 	{
 		return llvm::Constant::getIntegerValue(intType(size), llvm::APInt(size, val, isSigned));
+	}
+
+
+	llvm::Type *ptr(llvm::Type *pointed)
+	{
+		return llvm::PointerType::get(pointed, 0);
+	}
+
+
+	llvm::Value *getRegPtr(int offset, llvm::Type *destTy)
+	{
+		return _b->CreateIntToPtr(
+			_b->CreateAdd(_regsp, constant(64, offset)),
+			ptr(destTy));
 	}
 
 
@@ -253,7 +387,8 @@ public:
 private:
 	llvm::Module *_module;
 	LLVMBuilder *_b;
-	llvm::Value *_regs;
+	llvm::Value *_regs, *_regsp;
+	llvm::StringRef _fname;
 
 	std::map<IRTemp, llvm::Value*> _tmps;
 
@@ -272,7 +407,8 @@ static int asmToVEX(const llvm::object::SymbolRef &sym, llvm::Module *module)
 	CodeBlock bc(sym, module);
 	UChar *vexCode = new UChar[4096];
 	Int vexCodeUsed;
-	VexGuestExtents vge[128];
+	VexGuestExtents vge;
+	VexTranslateResult res;
 
 	vex_init_arg_common(&va);
 	va.guest_bytes = (UChar*)bc._symCode;
@@ -280,7 +416,7 @@ static int asmToVEX(const llvm::object::SymbolRef &sym, llvm::Module *module)
 
 	va.callback_opaque = &bc;
 	va.chase_into_ok = CodeBlock::vex_cb;
-	va.guest_extents = vge;
+	va.guest_extents = &vge;
 	va.host_bytes = vexCode;
 	va.host_bytes_size = 4096;
 	va.host_bytes_used = &vexCodeUsed;
@@ -288,7 +424,24 @@ static int asmToVEX(const llvm::object::SymbolRef &sym, llvm::Module *module)
 
 	va.instrument1 = CodeBlock::vex_instrument_cb;
 
-	LibVEX_Translate(&va);
+	while (va.guest_bytes_addr < bc._symAddr + bc._symSize) {
+		memset(&vge, 0, sizeof(vge));
+		res = LibVEX_Translate(&va);
+		if (res.status != VexTranslateResult::VexTransOK) {
+			llvm::errs() << "Failed to translate (error " << res.status << ")\n";
+			abort();
+		}
+
+		if (vge.n_used != 1) {
+			llvm::errs() << "Don't know what to do with the guest extents!\n";
+			abort();
+		}
+
+		va.guest_bytes += vge.len[0];
+		va.guest_bytes_addr += vge.len[0];
+	}
+
+	bc.finalize();
 
 	delete vexCode;
 }
@@ -314,8 +467,8 @@ int main(int argc, char** argv)
 	std::string se;
 	std::string file;
 
-	if (argc < 2) {
-		llvm::errs() << "Usage vex-llvm <file>\n";
+	if (argc < 3) {
+		llvm::errs() << "Usage vex-llvm <object> <output>\n";
 		return 1;
 	}
 
@@ -448,7 +601,9 @@ int main(int argc, char** argv)
 		}
 	}
 
-	llvm::outs() << *module;
+	std::string err;
+	llvm::raw_fd_ostream out(argv[2], err, 0);
+	module->print(out, NULL);
 
 	return 0;
 }
